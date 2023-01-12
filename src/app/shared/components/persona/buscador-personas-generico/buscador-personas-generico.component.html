@@ -1,0 +1,180 @@
+<!--
+<ngx-spinner bdColor="rgba(0,0,0,0.30)" size="large" color="#ffffff" type="ball-pulse" [fullScreen]="'true'">
+  <p class="Blanco">Espere un momento...</p>
+</ngx-spinner>
+<div class="row">
+  <div class="col-12 text-right">
+      <mat-icon class="pointer" (click)="cerrar()">highlight_off</mat-icon>
+  </div>
+</div>
+-->
+<div class="row">
+  <div class="row mt-3">
+    <!-- <h2>Registro de Solicitud Resumen Clínico</h2> -->
+    <mat-toolbar color="primary">
+      <span>Búsqueda de Persona</span>
+    </mat-toolbar>
+  </div>
+  </div>
+
+
+  <!-- <div class="col-12 barra_blanca centrado_vertical">
+      <h6>Búsqueda de contactos</h6>
+  </div> -->
+  <!-- buscador -->
+  <div class="row">
+  <div class="col-10 cuerpo_blanco">
+    <form action="" [formGroup]="searchForm" #schForm="ngForm">
+      <div class="row animated fadeIn" *ngIf="mostrarPrimero; else mostrarDespues">
+        <div class="col-12" formGroupName="identificacion">
+          <mat-form-field appearance="outline">
+            <mat-label>Número de Identificación, Código Expediente Único, Nombre
+              Completo</mat-label>
+            <input matInput #identificacion formControlName="valor" maxlength="50" type="text" role="textbox"
+              (keydown.Space)="onBackspaceKeydown($event)" />
+            <mat-hint align="start"><strong class="mensaje1">(*) Para habilitar búsqueda por nombre,
+                presionar tecla
+                espaciadora</strong>
+            </mat-hint>
+            <mat-hint align="end">{{ identificacion.value.length }} / 50</mat-hint>
+            <mat-icon color="primary" matSuffix (click)="manejaEsconder()" class="cursor"
+              matTooltip="Búsqueda por nombres">account_circle
+            </mat-icon>
+            <mat-hint class="text-danger animated shake delay-1s"
+              *ngIf="controlHasError('required', searchForm,['identificacion','valor'])" align="start">
+              Valor es
+              requerido</mat-hint>
+            <mat-hint class="text-danger animated shake delay-1s"
+              *ngIf="controlHasError('maxlength', searchForm, ['identificacion','valor'])" align="start">
+              Se
+              excedió límite de
+              caracteres</mat-hint>
+            <mat-hint class="text-danger animated shake delay-1s"
+              *ngIf="controlHasError('minlength', searchForm, ['identificacion','valor'])" align="start">
+              No se
+              cumplió con el mínimo de caracteres</mat-hint>
+          </mat-form-field>
+        </div>
+        <div class="row">
+          <div class="btn-group" role="group">
+            <button mat-flat-button color="primary" (click)="findPerson()" [disabled]="!schForm.valid">
+              <mat-icon>search</mat-icon>Buscar
+            </button>&nbsp;&nbsp;&nbsp;
+            <button mat-flat-button color="accent" (click)="cancelarBuscar()">
+              <mat-icon>close</mat-icon>Cancelar
+            </button>
+          </div>
+        </div>
+          <!-- <div class="col-12 d-flex align-items-center flex-end pt-3 me-2 ">
+            <button type="submit" mat-flat-button color="warn" (click)="cancelarBuscar()">
+              <mat-icon>close</mat-icon>Cancelar
+            </button>
+            <button type="submit" mat-flat-button class="boton-centrado2 ml-2" color="primary" (click)="findPerson()">
+              <mat-icon>search</mat-icon>Buscar
+            </button>
+          </div> -->
+
+      </div>
+      <ng-template #mostrarDespues>
+        <div class="animated fadeIn form-row centrado_vertical_horizontal">
+          <div class="col">
+            <mat-form-field appearance="outline">
+              <mat-label>Primer nombre</mat-label>
+              <input matInput #pNombre formControlName="primerNombre" [required]="schForm.value.primerNombre" />
+              <mat-hint align="end">{{ pNombre.value.length }} / 50</mat-hint>
+              <mat-hint class="text-danger animated shake delay-1s"
+                *ngIf="controlHasError('required', searchForm,['primerNombre'])" align="start">Valor es
+                requerido</mat-hint>
+              <mat-hint class="text-danger animated shake delay-1s"
+                *ngIf="controlHasError('maxlength', searchForm, ['primerNombre'])" align="start">Se
+                excedió límite de
+                caracteres</mat-hint>
+              <mat-hint class="text-danger animated shake delay-1s"
+                *ngIf="controlHasError('minlength', searchForm, ['primerNombre']) && !controlHasError('pattern', searchForm, ['primerNombre'])"
+                align="start">No se
+                cumplió con el mínimo de caracteres</mat-hint>
+              <mat-hint class="text-danger animated shake delay-1s"
+                *ngIf="controlHasError('pattern', searchForm, ['primerNombre'])" align="start">Formato
+                inválido</mat-hint>
+            </mat-form-field>
+          </div>
+          <span>&nbsp;&nbsp;&nbsp;</span>
+          <div class="col">
+            <mat-form-field appearance="outline">
+              <mat-label>Primer apellido</mat-label>
+              <input matInput #pApellido formControlName="primerApellido" [required]="schForm.value.primerNombre" />
+              <mat-hint align="end">{{ pApellido.value.length }} / 50</mat-hint>
+              <mat-hint class="text-danger animated shake delay-1s"
+                *ngIf="controlHasError('required', searchForm,['primerApellido'])" align="start">Valor
+                es requerido</mat-hint>
+              <mat-hint class="text-danger animated shake delay-1s"
+                *ngIf="controlHasError('maxlength', searchForm, ['primerApellido'])" align="start">Se
+                excedió límite de caracteres</mat-hint>
+              <mat-hint class="text-danger animated shake delay-1s"
+                *ngIf="controlHasError('minlength', searchForm, ['primerApellido']) && !controlHasError('pattern', searchForm, ['primerApellido'])"
+                align="start">No se
+                cumplió con el mínimo de caracteres</mat-hint>
+              <mat-hint class="text-danger animated shake delay-1s"
+                *ngIf="controlHasError('pattern', searchForm, ['primerApellido'])" align="start">Formato
+                inválido</mat-hint>
+            </mat-form-field>
+          </div>
+        </div>
+        <span>&nbsp;&nbsp;&nbsp;</span>
+        <div class="form-row centrado_vertical_horizontal">
+          <div class="col">
+            <mat-form-field appearance="outline">
+              <mat-label>Segundo nombre</mat-label>
+              <input matInput #sNombre maxlength="50" formControlName="segundoNombre" />
+              <mat-hint align="end">{{ sNombre.value.length }} / 50</mat-hint>
+              <mat-hint class="text-danger animated shake delay-1s"
+                *ngIf="controlHasError('maxlength', searchForm, ['segundoNombre'])" align="start">Se
+                excedió límite de
+                caracteres</mat-hint>
+              <mat-hint class="text-danger animated shake delay-1s"
+                *ngIf="controlHasError('minlength', searchForm, ['segundoNombre'])" align="start">No se
+                cumplió con el mínimo de caracteres</mat-hint>
+              <mat-hint class="text-danger animated shake delay-1s"
+                *ngIf="controlHasError('pattern', searchForm, ['segundoNombre'])" align="start">Formato
+                inválido</mat-hint>
+            </mat-form-field>
+          </div>
+          <span>&nbsp;&nbsp;&nbsp;</span>
+          <div class="col">
+            <mat-form-field appearance="outline">
+              <mat-label>Segundo apellido</mat-label>
+              <input matInput #sApellido maxlength="50" formControlName="segundoApellido" />
+              <mat-hint align="end">{{ sApellido.value.length }} / 50</mat-hint>
+              <mat-hint class="text-danger animated shake delay-1s"
+                *ngIf="controlHasError('maxlength', searchForm, ['segundoApellido'])" align="start">Se
+                excedió límite de
+                caracteres</mat-hint>
+              <mat-hint class="text-danger animated shake delay-1s"
+                *ngIf="controlHasError('minlength', searchForm, ['segundoApellido'])" align="start">No
+                se cumplió con el mínimo de caracteres</mat-hint>
+              <mat-hint class="text-danger animated shake delay-1s"
+                *ngIf="controlHasError('pattern', searchForm, ['segundoApellido'])" align="start">
+                Formato inválido</mat-hint>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="btn-group" role="group">
+            <button mat-flat-button color="primary" (click)="findPerson()" [disabled]="!schForm.valid">
+              <mat-icon>search</mat-icon>Continuar
+            </button> &nbsp;&nbsp;&nbsp;
+            <button mat-flat-button color="accent" (click)="cancelar()">
+              <mat-icon>clear</mat-icon>Cancelar
+            </button>
+          </div>
+        </div>
+      </ng-template>
+    </form>
+  </div>
+  <!-- buscador básico-->
+  <div class="row conPadding" *ngIf="error">
+    <div class=" col animated shake delay-1s">
+      <app-error-detail [error]="error" (executeAction)="captureAction($event)"></app-error-detail>
+    </div>
+  </div>
+</div>

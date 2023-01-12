@@ -1,0 +1,62 @@
+<ngx-spinner bdColor="rgba(0,0,0,0.8)" size="large" color="#ffffff" type="ball-pulse" [fullScreen]="'true'">
+    <p class="Blanco"> Espere un momento... </p>
+</ngx-spinner>
+<ng-container *ngIf="isLoad">
+
+    <div class="col-sm-12 col-lg-12 col-xs-12 col-md-12 main-header">
+        <app-header></app-header>
+    </div>
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 main-body" *ngIf="!deniedAccess; else accessDenied">
+        <mat-drawer-container class="example-container" autosize>
+            <mat-drawer #drawer class="example-sidenav" mode="side" [opened]="openMenu">
+                <!-- <app-sidebar></app-sidebar>    -->
+                <app-sidebarpropuesta [show]="isLoad"></app-sidebarpropuesta>
+            </mat-drawer>
+            <div class="row">
+            <div class="col-9 vertical-align">
+                <div class="row">
+                    <div class="col-1">
+                        <button mat-mini-fab color="primary" aria-label="Menú" (click)="drawer.toggle()">
+                            <mat-icon>menu</mat-icon>
+                          </button>
+                        <!-- <button type="button" mat-button (click)="drawer.toggle()">
+                            <mat-icon matSuffix>line_weight</mat-icon>
+                            Menú
+                        </button> -->
+
+
+                    </div>
+                <div class="col-11 vertical-align" *ngIf="unidadUsuarioLS">
+                    <h6 class="vertical-align"><strong>RED DE SERVICIO: </strong>
+                        {{unidadUsuarioLS.silais.nombre !=undefined ? unidadUsuarioLS.silais.nombre : ' '}},
+                        {{unidadUsuarioLS.unidad.nombre !=undefined ? unidadUsuarioLS.unidad.nombre : ' '}},
+                        {{unidadUsuarioLS.unidad.municipio.departamento.nombre !=undefined ? unidadUsuarioLS.unidad.municipio.departamento.nombre: ' '}},
+                        {{unidadUsuarioLS.unidad.municipio.nombre !=undefined ? unidadUsuarioLS.unidad.municipio.nombre: ' '}}
+                        <!--{{unidadUsuarioLS.silais.nombre !=undefined ? unidadUsuarioLS.silais.nombre : ' '}} {{unidadActual !=undefined ? unidadActual: ' '}}-->
+                        <!--{{silaisActual? silaisActual+' - '+unidadActual.nombre+','+unidadActual.departamento.nombre+','+unidadActual.municipio.nombre
+                        : null}}--></h6>
+                </div>
+
+                </div>
+            </div>
+            <div class="col-3 .text-right" style="display: flex !important; justify-content: flex-end !important;">
+                    <!-- <app-digital-clock class="d-flex flex-row-reverse"></app-digital-clock> -->
+                    <!-- <app-digital-clock class="float-right"></app-digital-clock> -->
+            </div>
+        </div>
+            <!-- <breadcrumb></breadcrumb> -->
+            <router-outlet></router-outlet>
+        </mat-drawer-container>
+    </div>
+    <ng-template #accessDenied>
+        <div class="container">
+            <div class="row">
+                <div class="col m-1">
+                    <app-error-detail class="animated shake delay-1s" [error]="deniedAccess"
+                        (executeAction)="captureAction($event)"></app-error-detail>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+
+</ng-container>

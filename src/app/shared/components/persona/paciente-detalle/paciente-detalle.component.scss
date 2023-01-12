@@ -1,0 +1,47 @@
+.text-divider {
+    margin: 2em 0;
+    line-height: 0;
+    text-align: center;
+  }
+  .text-divider span {
+    background-color: #f5f5f5;
+    padding: 1em;
+  }
+  .text-divider:before {
+    content: " ";
+    display: block;
+    border-top: 1px solid #e3e3e3;
+    border-bottom: 1px solid #f7f7f7;
+  }
+  
+  //CSS específico para tabla de consultas de paciente en una
+  
+  //columnas con ancho automatico
+  .mat-column-name {
+     word-wrap: break-word !important;
+      white-space: unset !important;
+      flex: 0 0 28% !important;
+      width: 28% !important;
+      overflow-wrap: break-word;
+      word-wrap: break-word;
+    
+      word-break: break-word;
+    
+      -ms-hyphens: auto;
+      -moz-hyphens: auto;
+      -webkit-hyphens: auto;
+      hyphens: auto;
+    }
+  
+  //CSS específico para tabla de consultas de paciente en una
+  
+  div.avatar{
+    text-align: center;
+  }
+  
+  .avatar-estilo{
+    border-radius: 50%;
+    padding: 0.5em;
+    width: 100%;
+    height: 100%;
+  }

@@ -1,0 +1,14 @@
+@import "src/assets/CSS/variables";
+
+#hours {
+  color: $rosado;
+  font-family: "digital-7";
+  font-size: 3rem;
+}
+
+@font-face {
+  font-family: "digital-7";
+  src: local("digital-7"), local("digital-7"),
+    //url("src/assets/fonts/digital-7-italic.ttf") format("truetype");
+    url("../../../../../assets/fonts/digital-7-italic.ttf")
+}

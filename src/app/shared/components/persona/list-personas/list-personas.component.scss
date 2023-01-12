@@ -1,0 +1,59 @@
+@import "src/assets/CSS/variables";
+
+.px-profile {
+  width: 100px;
+  height: 100px;
+  border-radius: 10%;
+  padding-bottom: 10px;
+}
+
+.px-profile :hover {
+  border: 1px salmon solid;
+}
+
+.femenino {
+  width: 100%;
+  background-color: #8c0032;
+  color: white;
+  font-weight: bold;
+}
+
+.masculino {
+  width: 100%;
+  background-color: #3f51b5;
+  color: white;
+  font-weight: bold;
+}
+
+.femenino-content {
+  background-color: #e83e8c;
+  color: white;
+  font-weight: bold;
+}
+
+.masculino-content {
+  background-color: #17a2b8;
+  color: white;
+  font-weight: bold;
+}
+
+.indeterminado-content {
+  background-color: #6c757d;
+  color: white;
+  font-weight: bold;
+}
+
+.nombres {
+  color: $blancHueso;
+}
+
+button.mat-fab.top {
+  position: fixed;
+  bottom: 8rem;
+  right: 5rem;
+}
+
+button.mat-fab.top:hover:enabled {
+  background-color: $amarillo1;
+  color: $fondoBarra;
+}

@@ -1,0 +1,140 @@
+<ng-container *ngIf="configurationDialog">
+    <div class="row">
+        <div class="col text-center">
+            <h2 mat-dialog-title>{{configurationDialog.title}}</h2>
+        </div>
+    </div>
+    <div class="row">
+        <mat-dialog-content class="contentResult">
+            <span [ngSwitch]="configurationDialog.actionRequest">
+                <ng-container *ngSwitchCase="search">
+                    <form class="m-3 text-center" [formGroup]="searchForm" #schForm="ngForm">
+                        <div class="row">
+                            <div class=" col m-2">
+                                <mat-form-field>
+                                    <mat-label>Primer nombre</mat-label>
+                                    <input matInput #pNombre formControlName="primerNombre"
+                                        [required]="schForm.value.primerNombre" />
+                                    <mat-hint align="end">{{ pNombre.value.length }} / 50</mat-hint>
+                                    <mat-hint class="text-danger animated shake delay-1s"
+                                        *ngIf="controlHasError('required', searchForm,['primerNombre'])" align="start">
+                                        Valor
+                                        es
+                                        requerido</mat-hint>
+                                    <mat-hint class="text-danger animated shake delay-1s"
+                                        *ngIf="controlHasError('maxlength', searchForm, ['primerNombre'])"
+                                        align="start">Se
+                                        excedió límite de
+                                        caracteres</mat-hint>
+                                    <mat-hint class="text-danger animated shake delay-1s"
+                                        *ngIf="controlHasError('minlength', searchForm, ['primerNombre'])"
+                                        align="start">No
+                                        se
+                                        cumplió con el mínimo de caracteres</mat-hint>
+                                </mat-form-field>
+                            </div>
+                            <div class="col m-2">
+                                <mat-form-field>
+                                    <mat-label>Primer apellido</mat-label>
+                                    <input matInput #pApellido formControlName="primerApellido"
+                                        [required]="schForm.value.primerNombre" />
+                                    <mat-hint align="end">{{ pApellido.value.length }} / 50</mat-hint>
+                                    <mat-hint class="text-danger animated shake delay-1s"
+                                        *ngIf="controlHasError('required', searchForm,['primerApellido'])"
+                                        align="start">
+                                        Valor
+                                        es
+                                        requerido</mat-hint>
+                                    <mat-hint class="text-danger animated shake delay-1s"
+                                        *ngIf="controlHasError('maxlength', searchForm, ['primerApellido'])"
+                                        align="start">
+                                        Se
+                                        excedió límite de
+                                        caracteres</mat-hint>
+                                    <mat-hint class="text-danger animated shake delay-1s"
+                                        *ngIf="controlHasError('minlength', searchForm, ['primerApellido'])"
+                                        align="start">
+                                        No se
+                                        cumplió con el mínimo de caracteres</mat-hint>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col m-2">
+                                <mat-form-field>
+                                    <mat-label>Segundo nombre</mat-label>
+                                    <input matInput #sNombre maxlength="50" formControlName="segundoNombre" />
+                                    <mat-hint align="end">{{ sNombre.value.length }} / 50</mat-hint>
+                                    <mat-hint class="text-danger animated shake delay-1s"
+                                        *ngIf="controlHasError('maxlength', searchForm, ['segundoNombre'])"
+                                        align="start">Se
+                                        excedió límite de
+                                        caracteres</mat-hint>
+                                </mat-form-field>
+                            </div>
+                            <div class="col m-2">
+                                <mat-form-field>
+                                    <mat-label>Segundo apellido</mat-label>
+                                    <input matInput #sApellido maxlength="50" formControlName="segundoApellido" />
+                                    <mat-hint align="end">{{ sApellido.value.length }} / 50</mat-hint>
+                                    <mat-hint class="text-danger animated shake delay-1s"
+                                        *ngIf="controlHasError('maxlength', searchForm, ['segundoNombre'])"
+                                        align="start">Se
+                                        excedió límite de
+                                        caracteres</mat-hint>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- <mat-dialog-actions class="row"> -->
+                    <div class="col text-rigth">
+                        <div class="d-flex flex-row justify-content-end">
+                            <button class="col-lg-2 col-xs-12 m-2" mat-raised-button color="primary"
+                                [disabled]="!schForm.valid" (click)="findPerson()">
+                                Buscar
+                                <mat-icon matSuffix>search</mat-icon>
+                            </button>
+                            <!-- <button class="col-lg-2 col-xs-12 m-2" mat-raised-button color="primary"
+                                (click)="close('NXT')">
+                                Continuar
+                                <mat-icon matSuffix>keyboard_arrow_right</mat-icon>
+                            </button>
+                            <button class="col-lg-2 col-xs-12 m-2" mat-raised-button color="accent"
+                                (click)="close('CNCL')">
+                                Cancelar <mat-icon matSuffix>cancel
+                                </mat-icon></button> -->
+                        </div>
+                    </div>
+                    <!-- </mat-dialog-actions> -->
+                </ng-container>
+                <ng-container *ngSwitchDefault>
+                    <ng-container *ngIf="listPersona">
+                        <div class="row">
+                            <div class="col">
+                                <app-list-personas [data]="listPersona" [paginacion]="paginator"
+                                    [typeParent]="parentRequest" (closeParent)="rowSelected($event)">
+                                </app-list-personas>
+                            </div>
+                        </div>
+                    </ng-container>
+
+                </ng-container>
+            </span>
+
+        </mat-dialog-content>
+
+    </div>
+    <div class="row">
+        <div class="col">
+            <div mat-dialog-actions class="d-flex flex-row justify-content-end contentResult">
+                <button class="col-lg-2 col-xs-12 m-2" mat-raised-button color="accent" (click)="close('CNCL')">
+                    Cancelar <mat-icon matSuffix>cancel
+                    </mat-icon></button>
+            </div>
+        </div>
+    </div>
+
+
+
+</ng-container>

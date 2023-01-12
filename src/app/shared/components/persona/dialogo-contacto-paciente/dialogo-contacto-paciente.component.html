@@ -1,0 +1,81 @@
+<ngx-spinner bdColor="rgba(0,0,0,0.30)" size="large" color="#ffffff" type="ball-pulse" [fullScreen]="'true'">
+  <p class="Blanco">Espere un momento...</p>
+</ngx-spinner>
+
+<div class="row">
+  <div class="col-md-12 text-right">
+    <button (click)="cerrarDialogo()" matTooltip="Cerrar" class="pull-right" mat-icon-button color="primary">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+</div>
+
+<div class="container-fluid scroll">
+  <mat-dialog-content>
+    <mat-card>
+      <span mat-dialog-title>Contactos de Urgencia</span>
+      <mat-card-content>
+        <form [formGroup]="contactourgencia">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Contacto</mat-label>
+                    <mat-icon matPrefix>contacts</mat-icon>
+                    <input type="text" matInput #segundonombreUr maxlength="100" readonly placeholder="Contacto"
+                      formControlName="contactoNombre" />
+                    <mat-icon matSuffix (click)="muestraBuscador()" class="pointer">search</mat-icon>
+                  </mat-form-field>
+                </div>
+                <div class="form-group col-md-2">
+                  <mat-form-field appearance="fill">
+                    <mat-label>Parentesco</mat-label>
+                    <mat-select formControlName="tipoRelacionId" (selectionChange)="selectTipoRelacion($event.value)">
+                      <mat-option *ngFor="let relacion of tipoRelacion" [value]="relacion.id">
+                        {{relacion.valor.toUpperCase()}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="form-group col-md-3">
+                  <mat-form-field hintLabel="Máximo 20 carácteres" appearance="fill">
+                    <mat-label>Teléfono</mat-label>
+                    <input matInput #telocal maxlength="20" placeholder="Teléfono local" type="text"
+                      formControlName="telefono1" />
+                    <mat-hint align="end">{{ telocal.value?.length || 0 }}/20</mat-hint>
+                  </mat-form-field>
+                </div>
+
+                <div class="col-md-12" *ngIf="controlesContactos">
+                  <app-persona-data-ubc-res [dt]="residenciaContacto" (frmValues)="llamarChildEvent($event)">
+                  </app-persona-data-ubc-res>
+                </div>
+                <!--nuevos elementos de contacto paciente-->
+
+
+                <!--nuevos elementos de contacto paciente-->
+              </div>
+            </div>
+            <br>
+            <div class="col-md-12 text-right">
+              <button mat-flat-button matTooltip="Guardar" color="primary" (click)="guardarContacto()"
+                *ngIf="!data.datosContacto">
+                <mat-icon>save</mat-icon> Guardar
+              </button>
+              <button mat-flat-button matTooltip="Actualizar" color="primary" (click)="actualizarContacto()"
+                *ngIf="data.datosContacto">
+                <mat-icon>replay</mat-icon> Actualizar
+              </button>
+              &nbsp;
+              <button mat-flat-button matTooltip="Guardar" color="accent" (click)="cerrarDialogo()">
+                <mat-icon>close</mat-icon> Cerrar
+              </button>
+
+            </div>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </mat-dialog-content>
+</div>

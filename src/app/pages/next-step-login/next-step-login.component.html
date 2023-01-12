@@ -1,0 +1,70 @@
+<ngx-spinner bdColor="rgba(0,0,0,0.8)" size="large" color="#ffffff" type="ball-pulse" [fullScreen]="'true'">
+  <p style="color: white"> Espere un momento... </p>
+</ngx-spinner>
+<!--Nuevo login-->
+<div class="contenedor_azul">
+  <div class="flex_container">
+    <div class="fondo_form">
+      <div class="logo">
+        <img src="assets/images/LogoGOBMINSA.png" alt="Logo Ministerio de Salud" role="img" />
+      </div>
+      <div class="barra_verde">
+        <span>{{ usuario.username }}</span>
+      </div>
+      <div class="row">
+        <div class="user_icon">
+          <img src="assets/images/Icon awesome-user-circle.png" width="80" height="80" alt="Icono de usuario"
+            role="img" />
+        </div>
+        <div class="div_texbox text-center">
+          <div class="mail">
+            {{ usuario.nombre }}
+          </div>
+        </div>
+        <div class="div_texbox" [formGroup]="fGroupUser">
+          <mat-form-field id="mffPass" class="input-full-width" color="accent">
+            <input id="clave" matTooltip="¿Cual es tu contraseña?" formControlName="password" matInput
+              placeholder="{{ msgValidarUser }}" type="{{ passtype }}" required (keydown.enter)="handleEnter($event)"
+              #pass />
+            <mat-icon matSuffix (click)="changeTypeInput()"> {{iconViewPass}} </mat-icon>
+            <mat-hint align="end">{{pass.value.length}} / 50</mat-hint>
+          </mat-form-field>
+          &nbsp;
+        </div> 
+        <div class="div_texbox">
+          <button id="login_user" type="submit" style="margin-left: 0.4%;" (click)="validate()"
+            matTooltip="Iniciar sesión" color="accent" [disabled]="!fGroupUser.valid" mat-raised-button color="accent">
+            Iniciar sesión
+          </button>
+          <br>
+          <br>
+
+          <div id="validaciones">
+            <span class="campoRequerido">{{ campoRequerido }}</span>
+          </div>
+
+          <div class="daaWTb">
+            <button mat-button color="primary" id="forgetpassword" (click)="recordarClave()">
+              ¿Olvidaste tu contraseña?
+            </button>
+          </div>
+          <div class="div_textbox text-center">
+            <div class="final">
+              <a [routerLink]="" (click)="regresar()">Regresar</a>
+              <br><br><br>
+              (c) Ministerio de Salud Nicaragua, {{anioSistema | date: 'yyyy'}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--Nuevo login-->
+  <div *ngIf="principal">
+    <br />
+    <!--The content below is only a placeholder and can be replaced.-->
+  </div>
+  <div id="recordarClave" *ngIf="!principal">
+    <!--<recordar-clave></recordar-clave> -->
+  </div>
+</div>

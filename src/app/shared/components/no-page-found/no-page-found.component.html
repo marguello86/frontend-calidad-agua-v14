@@ -1,0 +1,45 @@
+<div class="row h-100 w-100 bg-light text-dark">
+    <div class="col">
+        <div class="container">
+            <mat-card></mat-card>
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title></mat-card-title>
+                    <mat-card-subtitle></mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+                    <div class="row">
+                        <div class="col">
+                            <img class="img-fluid rounded mx-auto d-block" src="assets/images/LogoGOBMINSA.png"
+                                alt="Logo Ministerio de Salud" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col text-center">
+                            <h1>Lo sentimos, ruta no encontrada</h1>
+                            <h3 class="text-danger">Error 404</h3>
+                        </div>
+                    </div>
+
+                </mat-card-content>
+                <div class="row">
+                    <div class="col mx-1"><button class="w-100" mat-raised-button color="primary" (click)="goHome()">
+                            Inicio <mat-icon matPrefix>home</mat-icon>
+                        </button></div>
+                    <div class="col mx-1"><button class="w-100" mat-raised-button color="accent" (click)="logout()">
+                            Cerrar Sesión <mat-icon matPrefix>cancel</mat-icon>
+                        </button></div>
+                </div>
+                <!-- <div class="row text-center clearfix">
+                    <button mat-raised-button class="float-left" color="primary" (click)="goHome()">
+                        Inicio <mat-icon matPrefix>home</mat-icon>
+                    </button>
+
+                    <button mat-raised-button class="float-right" color="accent" (click)="goHome()">
+                        Cerrar Sesión <mat-icon matPrefix>cancel</mat-icon>
+                    </button>
+                </div> -->
+            </mat-card>
+        </div>
+    </div>
+</div>

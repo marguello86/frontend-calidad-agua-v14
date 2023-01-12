@@ -1,0 +1,16 @@
+@import "../theme";
+@import "src/assets/CSS/variables";
+
+.mat-list-item {
+  color: $fondoBlanco;
+  &:hover {
+    background-color: mat-color($app-primary, 100) !important;
+    color: $fondoArribaBarra;
+    font-weight: bold;
+  }
+}
+
+.mat-list-item.active {
+  background-color: mat-color($app-primary, 50);
+  color: $fondoArribaBarra;
+}

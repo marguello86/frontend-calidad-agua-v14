@@ -1,0 +1,481 @@
+<div class="row pt-4">
+  <mat-toolbar color="primary">
+    <span>BUZÓN DE REGISTROS DE HISTORIA CLÍNICA</span>
+  </mat-toolbar>
+</div>
+<mat-card>
+  <div class="card estiloPanel">
+    <div class="card-header">
+      <form
+        [formGroup]="formulario_filtro"
+        class="form"
+        action=""
+        animationDuration="850ms"
+        dynamicHeight
+      >
+        <div class="row mt-3">
+          <h6>
+            Filtro de Búsqueda. (Se requiere que seleccione al menos una
+            opción.)
+          </h6>
+        </div>
+        <div class="row mt-2" formGroupName="seleccion">
+          <div class="col-sm">
+            <mat-checkbox
+              #chkFechaHistoria
+              class="example-margin"
+              (change)="checkear(chkFechaHistoria.checked, 'fecha')"
+              formControlName="checkFechaHistoria"
+              >Fecha de Historia</mat-checkbox
+            >
+          </div>
+          <div class="col-sm">
+            <mat-checkbox
+              #chkSILAIS
+              class="example-margin"
+              (change)="checkear(chkSILAIS.checked, 'silais')"
+              formControlName="checkSILAIS"
+              >SILAIS / Unidad de Salud</mat-checkbox
+            >
+          </div>
+          <div class="col-sm">
+            <mat-checkbox
+              #chkCodigoExp
+              class="example-margin"
+              (change)="checkear(chkCodigoExp.checked, 'expediente')"
+              formControlName="checkExpediente"
+              >Código de Expediente</mat-checkbox
+            >
+          </div>
+          <div class="col-sm">
+            <mat-checkbox
+              #chkCodigoHC
+              class="example-margin"
+              (change)="checkear(chkCodigoHC.checked, 'codigoHistoria')"
+              formControlName="checkCodigo"
+              >Código de Historia Clínica</mat-checkbox
+            >
+          </div>
+          <div class="col-sm">
+            <mat-checkbox
+              #chkNombres
+              class="example-margin"
+              (change)="checkear(chkNombres.checked, 'nombres')"
+              formControlName="checkNombres"
+              >Nombres</mat-checkbox
+            >
+          </div>
+          <div class="col-sm">
+            <mat-checkbox
+              #chkIdentificacion
+              class="example-margin"
+              (change)="checkear(chkIdentificacion.checked, 'identificacion')"
+              formControlName="checkIdentificacion"
+              >Identificacion</mat-checkbox
+            >
+          </div>
+          <div class="col-sm">
+            <mat-checkbox
+              #chkSexo
+              class="example-margin"
+              (change)="checkear(chkSexo.checked, 'sexo')"
+              formControlName="checkSexo"
+              >Sexo</mat-checkbox
+            >
+          </div>
+          <div class="col-sm">
+            <mat-checkbox
+              #chkTipoHistoria
+              class="example-margin"
+              (change)="checkear(chkTipoHistoria.checked, 'tipoHistoria')"
+              formControlName="checkTipoHistoria"
+              >Tipo de Historia</mat-checkbox
+            >
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col" *ngIf="bFecha">
+            <mat-form-field appearance="outline">
+              <mat-label>Fecha Inicio</mat-label>
+              <input
+                matInput
+                [matDatepicker]="picker"
+                formControlName="fechaInicio"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="picker"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="col" *ngIf="bFecha">
+            <mat-form-field appearance="outline">
+              <mat-label>Fecha Fin</mat-label>
+              <input
+                matInput
+                [matDatepicker]="picker"
+                formControlName="fechaFin"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="picker"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="col" *ngIf="bCodigoExpediente">
+            <mat-form-field appearance="outline">
+              <mat-label>Código de Expediente</mat-label>
+              <input matInput formControlName="codigoExpediente" />
+            </mat-form-field>
+          </div>
+          <div class="col" *ngIf="bCodigoHC">
+            <mat-form-field appearance="outline">
+              <mat-label>Código de Historia Clínica</mat-label>
+              <input matInput formControlName="codigoHistoriaClinica" />
+            </mat-form-field>
+          </div>
+          <div class="col" *ngIf="bNombres">
+            <mat-form-field appearance="outline">
+              <mat-label>Primer nombre</mat-label>
+              <input matInput formControlName="primerNombre" />
+            </mat-form-field>
+          </div>
+          <div class="col" *ngIf="bNombres">
+            <mat-form-field appearance="outline">
+              <mat-label>Segundo nombre</mat-label>
+              <input matInput formControlName="segundoNombre" />
+            </mat-form-field>
+          </div>
+          <div class="col" *ngIf="bNombres">
+            <mat-form-field appearance="outline">
+              <mat-label>Primer apellido</mat-label>
+              <input matInput formControlName="primerApellido" />
+            </mat-form-field>
+          </div>
+          <div class="col" *ngIf="bNombres">
+            <mat-form-field appearance="outline">
+              <mat-label>Segundo apellido</mat-label>
+              <input matInput formControlName="segundoApellido" />
+            </mat-form-field>
+          </div>
+          <div class="col" *ngIf="bIdentificacion">
+            <mat-form-field appearance="outline">
+              <mat-label>Identificación</mat-label>
+              <input matInput formControlName="identificacion" />
+            </mat-form-field>
+          </div>
+          <div class="col" *ngIf="bSexo">
+            <div formGroupName="sexo">
+              <sbc-cat-colectivos-combo
+                required
+                [entidad]="'Sexo'"
+                [tipo]="'COD_SUP'"
+                [valor]="'SEXO'"
+                formControlName="id"
+              >
+              </sbc-cat-colectivos-combo>
+            </div>
+          </div>
+          <div class="col" *ngIf="bTipoHistoria">
+            <div formGroupName="tipoHistoria">
+              <sbc-cat-colectivos-combo
+                required
+                [entidad]="'Tipo de Historia Clínica'"
+                [tipo]="'COD_SUP'"
+                [valor]="'HISTORIACLINICA001'"
+                formControlName="id"
+              >
+              </sbc-cat-colectivos-combo>
+            </div>
+          </div>
+        </div>
+        <div class="row" *ngIf="bSilais">
+          <div class="col">
+            <sbc-cat-entidades-combo
+              [entidad]="'Silais'"
+              [prefijo]="''"
+              [esquema]="'seguridad-silais'"
+              [nullable]="'false'"
+              [tipo]="url"
+              [valor]="''"
+              [required]="true"
+              (onItemSelected)="updateUnidad($event)"
+              formControlName="silaisId"
+              #entidadFiltro
+              appearance="outline"
+            >
+            </sbc-cat-entidades-combo>
+          </div>
+          <div class="col" appearance="outline" *ngIf="entidadFiltro.value">
+            <sbc-cat-entidades-combo
+              [entidad]="'Unidad'"
+              [prefijo]="'unidad'"
+              [esquema]="'seguridad-silais'"
+              [tipo]="urlUnidad"
+              [valor]="entidadFiltro.value"
+              [referencia]="entidadFiltro"
+              formControlName="unidadSaludId"
+              #unidadselected
+            >
+            </sbc-cat-entidades-combo>
+          </div>
+        </div>
+      </form>
+      <div class="row mt-2">
+        <div class="col-md-12 d-flex justify-content-end p-0">
+          <button
+            mat-raised-button
+            class="me-4"
+            color="primary"
+            matTooltip="De un clic para realizar la busqueda"
+            matTooltipClass="tooltip-class"
+            [matTooltipPosition]="'above'"
+            (click)="buscar()"
+          >
+            BUSCAR <i class="fas fa-search"></i>
+          </button>
+
+          <button
+            mat-raised-button
+            class="me-4"
+            color="primary"
+            matTooltip="De un clic para limpiar el formulario"
+            matTooltipClass="tooltip-class"
+            [matTooltipPosition]="'above'"
+            (click)="limpiar()"
+          >
+            LIMPIAR <i class="fa-solid fa-clock-rotate-left"></i>
+          </button>
+
+          <button
+            mat-raised-button
+            color="primary"
+            matTooltip="De un clic para exportar los datos a Excel"
+            matTooltipClass="tooltip-class"
+            [matTooltipPosition]="'above'"
+            (click)="exportarExcel()"
+          >
+            EXPORTAR <i class="fa-solid fa-file-export"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <ng-container *ngIf="_mostrarMensaje">
+        <div class="row">
+          <div class="col text-center m-4">
+            <div
+              class="alert alert-primary alert-dismissible fade show"
+              role="alert"
+            >
+              <strong> No se encontraron registros. </strong>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+      <div div class="col-12">
+        <table mat-table [dataSource]="pagNominalHC" multiTemplateDataRows>
+          <ng-container matColumnDef="colapse">
+            <th
+              class="espaciado-titulos"
+              mat-header-cell
+              *matHeaderCellDef
+            ></th>
+            <td mat-cell class="espaciado-celda" *matCellDef="let element">
+              <i [ngClass]="this.claseExpandir + ' color-colapse'"></i>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="numero">
+            <th mat-header-cell *matHeaderCellDef>N°</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.lineNumber }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="codigoExpediente">
+            <th mat-header-cell *matHeaderCellDef>COD_EXPEDIENTE</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.expediente.codigo }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="nombreCompleto">
+            <th mat-header-cell *matHeaderCellDef>NOMBRE COMPLETO</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.paciente.nombreCompleto }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="sexo">
+            <th mat-header-cell *matHeaderCellDef>SEXO</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.paciente.sexo.valor }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="edad">
+            <th mat-header-cell *matHeaderCellDef>EDAD</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.paciente.edad }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="tipoHistoria">
+            <th mat-header-cell *matHeaderCellDef>TIPO HISTORIA</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.tipoHistoria.valor }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="usuarioRegistro">
+            <th mat-header-cell *matHeaderCellDef>Usuario Registro</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.usuarioRegistro }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="fechaRegistro">
+            <th mat-header-cell *matHeaderCellDef>Fecha de Registro</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.fechaRegistro | date: "dd-MM-yyyy" }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="acciones">
+            <th mat-header-cell *matHeaderCellDef>OPCIONES</th>
+            <td mat-cell *matCellDef="let element">
+              <button
+                mat-icon-button
+                color="primary"
+                matTooltip="De clic para imprimir reporte de historia clínica"
+                (click)="imprimirHC(element)"
+              >
+                <mat-icon>print</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="expandedDetail">
+            <td
+              mat-cell
+              *matCellDef="let element"
+              [attr.colspan]="columnasBuzon.length"
+            >
+              <div
+                class="example-element-detail"
+                [@detailExpand]="
+                  element == expandedElement ? 'expanded' : 'collapsed'
+                "
+              >
+                <div class="row p-3">
+                  <div class="col-1"></div>
+                  <div class="col-2">
+                    <strong>Fecha de Nacimiento:</strong> <br />{{
+                      element.paciente.fechaNacimiento | date: "dd-MM-yyyy"
+                    }}
+                  </div>
+                  <div class="col-3">
+                    <strong>Identificacion:</strong> <br />{{
+                      element.paciente.identificacion.numeroIdentificacion
+                    }}
+                  </div>
+                  <div class="col-3">
+                    <strong>Telefono:</strong> <br />{{
+                      element.paciente.telefono
+                    }}
+                  </div>
+                  <div class="col-3">
+                    <strong>Fecha de historia:</strong> <br />{{
+                      element.fechaHistoria | date: "dd-MM-yyyy"
+                    }}
+                  </div>
+                  <div class="col-1"><i class="fa fa-clipboard fa-2x"></i></div>
+                  <div class="col-2">
+                    <strong>País origen:</strong> <br />{{
+                      element.paciente.paisOrigen.nombre
+                    }}
+                  </div>
+                  <div class="col-3">
+                    <strong>Departamento origen:</strong> <br />{{
+                      element.paciente.departamentoOrigen.nombre
+                    }}
+                  </div>
+                  <div class="col-3">
+                    <strong>Municipio origen:</strong> <br />{{
+                      element.paciente.municipiOrigen.nombre
+                    }}
+                  </div>
+                  <div class="col-3">
+                    <strong>Dirección residencia:</strong> <br />{{
+                      element.paciente.direccionResidencia
+                    }}
+                  </div>
+                  <div class="col-1"></div>
+                  <div class="col-2">
+                    <strong>Codigo historia clínica:</strong> <br />
+                    {{ element.historiaClinicaId }}
+                  </div>
+                  <div class="col-3">
+                    <strong>Admisión servicio:</strong> <br />
+                    {{
+                      element.admisionServicio.id == 0
+                        ? "N/D"
+                        : element.admisionServicio.id
+                    }}
+                  </div>
+                  <div class="col-3">
+                    <strong>Estado registro:</strong> <br />{{
+                      element.estadoRegistro.valor
+                    }}
+                  </div>
+                  <div class="col-3"></div>
+                  <div class="col-1"></div>
+                  <div class="col-2">
+                    <strong>SILAIS (Elabora historia clínica):</strong> <br />
+                    {{ element.entidad.nombre }}
+                  </div>
+                  <div class="col-3">
+                    <strong>Unidad de Salud (Elabora historia clínica):</strong>
+                    <br />{{ element.entidad.unidadSalud.nombre }}
+                  </div>
+                  <div class="col-3">
+                    <strong>Médico (Elabora historia clínica):</strong> <br />{{
+                      element.personalSalud.persona.primerNombre
+                    }}
+                    {{ element.personalSalud.persona.segundoNombre }}
+                    {{ element.personalSalud.persona.primerApellido }}
+                    {{ element.personalSalud.persona.segundoApellido }}
+                  </div>
+                </div>
+              </div>
+            </td>
+          </ng-container>
+
+          <tr
+            mat-header-row
+            *matHeaderRowDef="columnasBuzon; sticky: true"
+          ></tr>
+          <tr
+            mat-row
+            *matRowDef="let element; columns: columnasBuzon"
+            class="example-element-row"
+            [class.example-expanded-row]="element"
+            (click)="
+              expandedElement = this.ToogleContenedorDetalle(
+                element,
+                expandedElement
+              )
+            "
+          ></tr>
+          <!--MUESTRA EL DETALLE-->
+          <tr
+            mat-row
+            *matRowDef="let row; columns: ['expandedDetail']"
+            class="example-detail-row"
+          ></tr>
+        </table>
+        <mat-paginator
+      #paginatorRHC
+      [pageSizeOptions]="[ 10, 20, 30]"
+      showFirstLastButtons
+      aria-label="Select page of periodic elements"
+    >
+    </mat-paginator>
+      </div>
+    </div>
+  </div>
+</mat-card>

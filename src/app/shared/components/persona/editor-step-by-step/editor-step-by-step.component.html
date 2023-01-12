@@ -1,0 +1,327 @@
+<mat-horizontal-stepper [linear]="'true'" #stpEditorPersona>
+    <mat-step [stepControl]="personaFormGroup">
+        <form [formGroup]="personaFormGroup" #prsFrmGrp>
+            <ng-template matStepLabel>Tipo de persona</ng-template>
+            <div class="row">
+                <div class="col m-2 text-center">
+                    <mat-card class="row">
+                        <mat-card-header>
+                        </mat-card-header>
+                        <mat-card-content>
+                            <div class="card mb-3">
+                                <div class=" row">
+                                    <div class="col-md-4">
+                                        <div class="d-flex flex-row justify-content-center">
+                                            <mat-icon class="p-4 m-4" matSuffix style=" font-size: 48px;">person_add
+                                            </mat-icon>
+                                            <div class="m-3"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <h5 class="card-title text-dark"> Persona identificada </h5>
+                                            <p class="card-text text-dark"> Persona / Menor de Edad / Nacionales /
+                                                Extranjeros
+                                            </p>
+                                            <button mat-raised-button
+                                                (click)="captureEventNext(stpEditorPersona,'IDNT');">
+                                                Registrar <mat-icon matSuffix>event_note</mat-icon> </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-card-content>
+                        <mat-card-actions>
+
+                        </mat-card-actions>
+                    </mat-card>
+
+
+                </div>
+
+
+                <div class="col m-2" *ngIf="show">
+                    <div class="card mb-3 bg-success" style="max-width: 540px;">
+                        <div class="row no-gutters">
+                            <div class="col-md-4 justify-content-center">
+                                <mat-icon matSuffix style="font-size: 48px;">face</mat-icon>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title text-dark"> Recién nacido </h5>
+                                    <p class="card-text text-dark"> Nacimientos de ocurrido en una unidad de salud </p>
+                                    <button mat-raised-button (click)="captureEventNext(stpEditorPersona,'RNC');">
+                                        Registrar </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col m-2" *ngIf="show">
+                    <div class="card mb-3 bg-warning" style="max-width: 540px;">
+                        <div class="row no-gutters">
+                            <div class="col-md-4 justify-content-center">
+                                <mat-icon matSuffix style="font-size: 48px;">live_help</mat-icon>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title text-dark"> Desconocido </h5>
+                                    <p class="card-text text-dark"> Registros de personas sin ningún tipo de
+                                        identificación, solo
+                                        aplica para módulo de emergencia </p>
+                                    <button mat-raised-button (click)="captureEventNext(stpEditorPersona,'RNC');">
+                                        Registrar </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </form>
+    </mat-step>
+    <mat-step [stepControl]="personaFormGroup">
+        <form [formGroup]="personaFormGroup">
+            <ng-template matStepLabel> Información de nacimiento </ng-template>
+
+            <ng-container formGroupName="divisionPolitica">
+
+                <mat-card class="row" formGroupName="nacimiento">
+                    <mat-card-content>
+                        <div class="row">
+                            <div class="col m-2" formGroupName="pais">
+                                <sbc-cat-entidades-combo [entidad]="'País de nacimiento'" [prefijo]="''"
+                                    [esquema]="'catalogos'" [tipo]="'gestion-paises/pais'" [valor]="''"
+                                    [nullable]='true' (onItemSelected)="countryBornSelected($event)"
+                                    formControlName="id" #paisNac>
+                                </sbc-cat-entidades-combo>
+                            </div>
+                            <div class="col m-2" formGroupName="departamento" *ngIf="!isForeign && paisNac.value">
+                                <sbc-cat-entidades-combo [entidad]="'Departamento'" [prefijo]="''"
+                                    [esquema]="'catalogos'" [tipo]="'gestion-divpolitica/departamento'" [valor]="''"
+                                    [nullable]='true' [required]="true" (onItemSelected)="updateMunicipioBorn($event)"
+                                    formControlName="id" #departamentBorn>
+                                </sbc-cat-entidades-combo>
+
+                            </div>
+
+                            <div class="col m-2" formGroupName="municipio" *ngIf="!isForeign">
+                                <sbc-cat-entidades-combo [entidad]="'Municipio'" [prefijo]="'municipio'"
+                                    [esquema]="'catalogos'" [tipo]="'gestion-divpolitica/municipio'"
+                                    [referencia]="'departamento'" [required]='true'
+                                    (onItemSelected)='municipioBornSelected($event)' formControlName="id"
+                                    #municipioBorn>
+                                </sbc-cat-entidades-combo>
+
+                            </div>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </ng-container>
+            <div>
+                <button class="m-2" mat-raised-button matStepperPrevious color="warn">
+                    <mat-icon matSuffix>keyboard_arrow_left</mat-icon> Regresar
+                </button>
+                <button class="m-2" *ngIf="showNextDataGral" mat-raised-button color="primary"
+                    (click)="captureEventNext(stpEditorPersona)">
+                    Continuar
+                    <mat-icon matSuffix>keyboard_arrow_right</mat-icon>
+                </button>
+            </div>
+        </form>
+    </mat-step>
+    <mat-step [stepControl]="personaFormGroup">
+        <form [formGroup]="personaFormGroup">
+            <ng-template matStepLabel> Datos generales </ng-template>
+
+            <mat-card class="row" *ngIf="codeIdentificaciones">
+                <mat-card-content>
+                    <div class="row">
+                        <div class="col m-2" formGroupName="identificacion">
+                            <sbc-cat-colectivos-combo (onItemSelected)='typeIdentificacionSelected($event)'
+                                [hideFilter]='true' [entidad]="'Tipo identificación'" [tipo]="'COD_SUP'"
+                                [valor]="'TPIDNTF'" [permitidos]="codeIdentificaciones" formControlName="id"
+                                #tipoIdentificacion>
+                            </sbc-cat-colectivos-combo>
+                        </div>
+                        <div class="col m-2" formGroupName="identificacion">
+                            <mat-form-field appearance="standard">
+                                <mat-label>Número de identificación</mat-label>
+                                <input matInput #numeroIdentificacion formControlName="valor"
+                                    [maxLength]="maxLengthNumIdentificacion" />
+                                <mat-hint align="end">{{ numeroIdentificacion.value.length }} /
+                                    {{maxLengthNumIdentificacion}}
+                                </mat-hint>
+                                <mat-hint class="text-danger animated shake delay-1s"
+                                    *ngIf="controlHasError('required', personaFormGroup,['identificacion','valor'])"
+                                    align="start">
+                                    Valor es requerido</mat-hint>
+                                <mat-hint class="text-danger animated shake delay-1s"
+                                    *ngIf="controlHasError('maxlength', personaFormGroup,['identificacion','valor'])"
+                                    align="start">
+                                    Se
+                                    excedió límite de
+                                    caracteres</mat-hint>
+                                <mat-hint class="text-danger animated shake delay-1s"
+                                    *ngIf="controlHasError('duplicateIdentificacion', personaFormGroup,['identificacion'])"
+                                    align="start">
+                                    Identificación
+                                    registrada a
+                                    {{ msgErrorCoincidence }}
+                                </mat-hint>
+                                <mat-hint class="text-danger animated shake delay-1s"
+                                    *ngIf="controlHasError('pattern', personaFormGroup,['identificacion','valor'])"
+                                    align="start">
+                                    Número de identificación no cumple con formato
+                                </mat-hint>
+                                <mat-hint class="text-danger animated shake delay-1s"
+                                    *ngIf="controlHasError('cedulaInvalida', personaFormGroup,['identificacion','valor'])"
+                                    align="start">
+                                    Número de identificación incorrecta
+                                </mat-hint>
+                            </mat-form-field>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <!--Primer nombre-->
+                        <div class="col">
+                            <mat-form-field appearance="standard">
+                                <mat-label>Primer nombre</mat-label>
+                                <input matInput #pNombre formControlName="primerNombre" maxlength="50" />
+                                <mat-hint align="end">{{ pNombre.value.length }} / 50</mat-hint>
+                                <mat-hint class="text-danger animated shake delay-1s"
+                                    *ngIf="controlHasError('required', personaFormGroup,['primerNombre'])"
+                                    align="start">
+                                    Valor es
+                                    requerido</mat-hint>
+                                <mat-hint class="text-danger animated shake delay-1s"
+                                    *ngIf="controlHasError('maxlength', personaFormGroup, ['primerNombre'])"
+                                    align="start">
+                                    Se
+                                    excedió límite de
+                                    caracteres</mat-hint>
+                                <mat-hint class="text-danger animated shake delay-1s"
+                                    *ngIf="controlHasError('pattern', personaFormGroup, ['primerNombre'])"
+                                    align="start">
+                                    Formato inválido</mat-hint>
+                            </mat-form-field>
+                        </div>
+                        <!--Primer nombre-->
+                        <span class="espacio"></span>
+                        <!--Segundo nombre-->
+                        <div class="col">
+                            <mat-form-field appearance="standard">
+                                <mat-label>Segundo nombre</mat-label>
+                                <input matInput #sNombre formControlName="segundoNombre" maxlength="50" />
+                                <mat-hint align="end">{{ sNombre.value.length }} / 50</mat-hint>
+                                <mat-hint class="text-danger animated shake delay-1s"
+                                    *ngIf="controlHasError('maxlength', personaFormGroup, ['segundoNombre'])"
+                                    align="start">
+                                    Se
+                                    excedió límite de
+                                    caracteres</mat-hint>
+                                <mat-hint class="text-danger animated shake delay-1s"
+                                    *ngIf="controlHasError('pattern', personaFormGroup, ['segundoNombre'])"
+                                    align="start">
+                                    Formato inválido</mat-hint>
+                            </mat-form-field>
+                        </div>
+                        <!--Segundo nombre-->
+                        <span class="espacio"></span>
+
+                    </div>
+                    <div class="row">
+                        <!--Primer apellido-->
+                        <div class="col">
+                            <mat-form-field appearance="standard">
+                                <mat-label>Primer apellido</mat-label>
+                                <input matInput #pApellido maxlength="50" formControlName="primerApellido"
+                                    maxlength="50" />
+                                <mat-hint align="end">{{ pApellido.value.length }} / 50</mat-hint>
+                                <mat-hint class="text-danger animated shake delay-1s"
+                                    *ngIf="controlHasError('required', personaFormGroup,['primerApellido'])"
+                                    align="start">
+                                    Valor
+                                    es
+                                    requerido</mat-hint>
+                                <mat-hint class="text-danger animated shake delay-1s"
+                                    *ngIf="controlHasError('maxlength', personaFormGroup, ['primerApellido'])"
+                                    align="start">Se
+                                    excedió límite de
+                                    caracteres</mat-hint>
+                                <mat-hint class="text-danger animated shake delay-1s"
+                                    *ngIf="controlHasError('pattern', personaFormGroup, ['primerApellido'])"
+                                    align="start">
+                                    Formato inválido</mat-hint>
+                            </mat-form-field>
+                        </div>
+                        <!--Primer apellido-->
+                        <span class="espacio"></span>
+                        <!--Segundo apellido-->
+                        <div class="col">
+                            <mat-form-field appearance="standard">
+                                <mat-label>Segundo apellido</mat-label>
+                                <input matInput #sApellido maxlength="50" formControlName="segundoApellido"
+                                    maxlength="50" />
+                                <mat-hint align="end">{{ sApellido.value.length }} / 50</mat-hint>
+                                <mat-hint class="text-danger animated shake delay-1s"
+                                    *ngIf="controlHasError('maxlength', personaFormGroup, ['segundoApellido'])"
+                                    align="start">Se
+                                    excedió límite de
+                                    caracteres</mat-hint>
+                                <mat-hint class="text-danger animated shake delay-1s"
+                                    *ngIf="controlHasError('pattern', personaFormGroup, ['segundoApellido'])"
+                                    align="start"> Formato inválido </mat-hint>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col" formGroupName="sexo">
+                            <sbc-cat-colectivos-combo (onItemSelected)='typeGenderSelected($event)' [hideFilter]='true'
+                                [entidad]="'Género'" [tipo]="'COD_SUP'" [valor]="'SEXO'" formControlName="id" #sexo>
+                            </sbc-cat-colectivos-combo>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <mat-form-field appearance="standard">
+                                <mat-label>Fecha nacimiento</mat-label>
+                                <input matInput [matDatepicker]="picker" formControlName="fechaNacimiento"
+                                    [max]="maxDate" (dateChange)="dateChangeEvent($event)" />
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker startView="year" [startAt]="startDate"></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                        <div class="col"></div>
+
+                    </div>
+                </mat-card-content>
+                <mat-card-actions>
+                </mat-card-actions>
+            </mat-card>
+
+            <div>
+                <button class="m-2" mat-raised-button matStepperPrevious color="warn">
+                    <mat-icon matSuffix>keyboard_arrow_left</mat-icon> Regresar
+                </button>
+                <button class="m-2" mat-raised-button color="primary" (click)="close('NXT')">
+                    Continuar
+                    <mat-icon matSuffix>keyboard_arrow_right</mat-icon>
+                </button>
+
+                <button class="m-2 bg-danger text-white" mat-button (click)="resetStepper(stpEditorPersona)">
+                    Restablecer
+                    <mat-icon matSuffix>sync</mat-icon> </button>
+            </div>
+        </form>
+    </mat-step>
+</mat-horizontal-stepper>
+<hr />
+<button mat-raised-button color="accent" [mat-dialog-close]="true" (click)="close('CNCL')"> Cancelar <mat-icon
+        matSuffix>cancel</mat-icon></button>

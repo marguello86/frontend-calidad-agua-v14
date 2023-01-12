@@ -1,0 +1,506 @@
+<div class="col-12 cuerpo_blanco">
+    <form [formGroup]="personaForm" #frmPrs="ngForm">
+        <div class="row">
+            <div class="col-12 barra_blanca centrado_vertical conPadding">
+                <h6>Información general de persona</h6>
+                <div class="col-lg-2 ml-2 alert px-2 alert-danger text-center" role="alert" *ngIf="isPrechaged">
+                    Registro Precargado
+                </div>
+                <div class="col-lg-2 ml-2 mr-2 px-2 alert alert-primary text-center" role="alert" *ngIf="isForeign">
+                    Persona Extranjera
+                </div>
+                <div class="col-lg-2 ml-2 mr-2 px-2 alert alert-primary text-center" role="alert" *ngIf="!isForeign">
+                    Persona Nacional
+                </div>
+                <div class="col-lg-2 ml-2 alert px-2 alert-dark text-center" role="alert" *ngIf="isDifunto">
+                    Estado: Difunto
+                </div>
+            </div>
+            <div class="col">
+                <!--línea superior-->
+                <!--Identificación-->
+                <div class="row" formGroupName="identificacion" #identificacion>
+                    <div class="col m-3">
+                        <!--Identificacion | Tipo-->
+                        <sbc-cat-colectivos-combo (onItemSelected)='typeIdentificacionSelected($event)'
+                            [entidad]="'Tipo identificación'" [tipo]="'COD_SUP'" [valor]="'TPIDNTF'"
+                            formControlName="id" #tipoIdentificacion>
+                        </sbc-cat-colectivos-combo>
+
+                        <!-- 
+                            <mat-form-field appearance="standard">
+                            <mat-label>Tipo identificación</mat-label>
+                            <input matInput #tipoIdentificacion formControlName="nombre" />
+                            <mat-hint align="end">{{ tipoIdentificacion.value.length }} / 50</mat-hint>
+                        </mat-form-field>
+                        -->
+                        <!--Identificacion | Tipo-->
+                        <!-- <span class="espacio"></span> -->
+                    </div>
+                    <div class="col m-3">
+                        <!-- <span class="espacio"></span> -->
+                        <!--Identificacion | Número-->
+                        <mat-form-field appearance="standard">
+                            <mat-label>Número de identificación</mat-label>
+                            <input matInput #numeroIdentificacion formControlName="valor" maxlength="50" />
+                            <mat-hint align="end">{{ numeroIdentificacion.value.length }} / 50</mat-hint>
+                            <mat-hint class="text-danger animated shake delay-1s"
+                                *ngIf="controlHasError('required', personaForm,['identificacion','valor'])"
+                                align="start">Valor es requerido</mat-hint>
+                            <mat-hint class="text-danger animated shake delay-1s"
+                                *ngIf="controlHasError('maxlength', personaForm,['identificacion','valor'])"
+                                align="start">Se
+                                excedió límite de
+                                caracteres</mat-hint>
+                            <mat-hint class="text-danger animated shake delay-1s"
+                                *ngIf="controlHasError('minlength', personaForm, ['identificacion','valor'])"
+                                align="start">No se
+                                cumplió con el mínimo de caracteres</mat-hint>
+                            <mat-hint class="text-danger animated shake delay-1s"
+                                *ngIf="controlHasError('duplicateIdentificacion', personaForm,['identificacion'])"
+                                align="start">
+                                Identificación
+                                registrada a
+                                {{ msgErrorCoincidence }}
+                            </mat-hint>
+                            <mat-icon matSuffix matTooltip="Copiar"
+                                (click)="copyContent(numeroIdentificacion, 'Número de identificación')">content_copy
+                            </mat-icon>
+                        </mat-form-field>
+                        <!--Identificacion | Tipo-->
+                    </div>
+                </div>
+                <div class="row conPadding"
+                    *ngIf="controlHasError('duplicateIdentificacion', personaForm,['identificacion'])"
+                    style="align-content: center;">
+                    <div class=" col-lg-4 col-xs-12 animated shake delay-2s">
+                        <app-error-detail [error]="error"></app-error-detail>
+                    </div>
+                </div>
+
+                <!--Identificación-->
+
+
+                <div class="row conPadding">
+                    <!--Primer nombre-->
+                    <div class="col">
+                        <mat-form-field appearance="standard">
+                            <mat-label>Primer nombre</mat-label>
+                            <input matInput #pNombre formControlName="primerNombre" maxlength="50" required />
+                            <mat-hint align="end">{{ pNombre.value.length }} / 50</mat-hint>
+                            <mat-hint class="text-danger animated shake delay-1s"
+                                *ngIf="controlHasError('required', personaForm,['primerNombre'])" align="start">Valor es
+                                requerido</mat-hint>
+                            <mat-hint class="text-danger animated shake delay-1s"
+                                *ngIf="controlHasError('maxlength', personaForm, ['primerNombre'])" align="start">Se
+                                excedió límite de
+                                caracteres</mat-hint>
+                            <mat-hint class="text-danger animated shake delay-1s"
+                                *ngIf="controlHasError('minlength', personaForm, ['primerNombre'])" align="start">No se
+                                cumplió con el mínimo de caracteres</mat-hint>
+                            <mat-hint class="text-danger animated shake delay-1s"
+                                *ngIf="controlHasError('pattern', personaForm, ['primerNombre'])" align="start">
+                                Formato inválido</mat-hint>
+                        </mat-form-field>
+                    </div>
+                    <!--Primer nombre-->
+                    <span class="espacio"></span>
+                    <!--Segundo nombre-->
+                    <div class="col">
+                        <mat-form-field appearance="standard">
+                            <mat-label>Segundo nombre</mat-label>
+                            <input matInput #sNombre formControlName="segundoNombre" maxlength="50" />
+                            <mat-hint align="end">{{ sNombre.value.length }} / 50</mat-hint>
+                            <mat-hint class="text-danger animated shake delay-1s"
+                                *ngIf="controlHasError('maxlength', personaForm, ['segundoNombre'])" align="start">Se
+                                excedió límite de
+                                caracteres</mat-hint>
+                            <mat-hint class="text-danger animated shake delay-1s"
+                                *ngIf="controlHasError('pattern', personaForm, ['segundoNombre'])" align="start">
+                                Formato inválido</mat-hint>
+                        </mat-form-field>
+                    </div>
+                    <!--Segundo nombre-->
+                    <span class="espacio"></span>
+                    <!--Primer apellido-->
+                    <div class="col">
+                        <mat-form-field appearance="standard">
+                            <mat-label>Primer apellido</mat-label>
+                            <input matInput #pApellido maxlength="50" formControlName="primerApellido" maxlength="50"
+                                required />
+                            <mat-hint align="end">{{ pApellido.value.length }} / 50</mat-hint>
+                            <mat-hint class="text-danger animated shake delay-1s"
+                                *ngIf="controlHasError('required', personaForm,['primerApellido'])" align="start">Valor
+                                es
+                                requerido</mat-hint>
+                            <mat-hint class="text-danger animated shake delay-1s"
+                                *ngIf="controlHasError('maxlength', personaForm, ['primerApellido'])" align="start">Se
+                                excedió límite de
+                                caracteres</mat-hint>
+                            <mat-hint class="text-danger animated shake delay-1s"
+                                *ngIf="controlHasError('minlength', personaForm, ['primerApellido'])" align="start">No
+                                se
+                                cumplió con el mínimo de caracteres</mat-hint>
+                            <mat-hint class="text-danger animated shake delay-1s"
+                                *ngIf="controlHasError('pattern', personaForm, ['primerApellido'])" align="start">
+                                Formato inválido</mat-hint>
+                        </mat-form-field>
+                    </div>
+                    <!--Primer apellido-->
+                    <span class="espacio"></span>
+                    <!--Segundo apellido-->
+                    <div class="col">
+                        <mat-form-field appearance="standard">
+                            <mat-label>Segundo apellido</mat-label>
+                            <input matInput #sApellido maxlength="50" formControlName="segundoApellido"
+                                maxlength="50" />
+                            <mat-hint align="end">{{ sApellido.value.length }} / 50</mat-hint>
+                            <mat-hint class="text-danger animated shake delay-1s"
+                                *ngIf="controlHasError('maxlength', personaForm, ['segundoApellido'])" align="start">Se
+                                excedió límite de
+                                caracteres</mat-hint>
+                            <mat-hint class="text-danger animated shake delay-1s"
+                                *ngIf="controlHasError('pattern', personaForm, ['segundoApellido'])" align="start">
+                                Formato inválido</mat-hint>
+                        </mat-form-field>
+                    </div>
+                    <!--Segundo apellido-->
+                </div>
+                <!--línea superior-->
+            </div>
+            <!--línea inferior-->
+            <div class="row conPadding">
+                <span class="espacio"></span>
+                <!--Genero | Sexo-->
+                <div class="col" formGroupName="sexo">
+                    <sbc-cat-colectivos-combo (onItemSelected)='typeGenderSelected($event)'
+                        [entidad]="'Género'" [tipo]="'COD_SUP'" [valor]="'SEXO'" formControlName="id" #sexo>
+                    </sbc-cat-colectivos-combo>
+                    <!--
+                        <mat-form-field appearance=" standard">
+                        <mat-label>Género</mat-label>
+                        <input matInput #sexo maxlength="50" formControlName="valor" />
+                        <mat-hint align="end">{{ sexo.value.length }} / 50</mat-hint>
+                        </mat-form-field>
+                        -->
+                </div>
+                <!--Genero-->
+                <span class="espacio"></span>
+                <!--Fecha nacimiento-->
+                <div class="col">
+                    <mat-form-field appearance="standard">
+                        <mat-label>Fecha nacimiento</mat-label>
+                        <input matInput [matDatepicker]="picker" formControlName="fechaNacimiento" [max]="maxDate"
+                            (dateChange)="dateChangeEvent($event)" />
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker startView="year" [startAt]="startDate"></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <!--Fecha nacimiento-->
+                <span class="espacio"></span>
+                <!--Edad Exacta-->
+                <div class="col">
+                    <mat-form-field appearance="standard">
+                        <mat-label>Edad exacta</mat-label>
+                        <input matInput #edadExacta formControlName="edadExacta" />
+                        <mat-hint align="end">{{ edadExacta.value.length }} / 50</mat-hint>
+                    </mat-form-field>
+                </div>
+                <!--Edad Exacta-->
+            </div>
+            <!--línea inferior-->
+        </div>
+        <mat-accordion multi>
+            <mat-expansion-panel [expanded]="validateExpandPanel()">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Información de División Política
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        Nacimiento / Residencia
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <!--División Política | Nacimiento-->
+                <div formGroupName="divisionPolitica">
+                    <div class="row">
+                        <div class="col-12 barra_blanca centrado_vertical conPadding">
+                            <!-- <h6>Información división política de nacimiento</h6> -->
+                            <h6> Nacimiento </h6>
+                        </div>
+                        <div class="col" formGroupName="nacimiento">
+                            <div class="row conPadding">
+                                <!--Pais-->
+                                <div class="col" formGroupName="pais">
+                                    <sbc-cat-entidades-combo [entidad]="'País'" [prefijo]="''" [esquema]="'catalogos'"
+                                        [tipo]="'gestion-paises/pais'" [valor]="''" [nullable]='true' [required]="true"
+                                        (onItemSelected)="countryBornSelected($event)" formControlName="id" #paisNac>
+                                    </sbc-cat-entidades-combo>
+                                    <!--
+                                <mat-form-field appearance="standard">
+                                <mat-label>País nacimiento</mat-label>
+                                <input matInput #pais maxlength="50" formControlName="nombre" required />
+                                <mat-hint align="end">{{ pais.value.length }} / 50</mat-hint>
+                            </mat-form-field>
+                            -->
+                                </div>
+                                <!--Pais-->
+
+                                <span class="espacio"></span>
+                                <!--Departamento-->
+                                <div class="col" formGroupName="departamento" *ngIf="!isForeign && paisNac.value">
+                                    <sbc-cat-entidades-combo [entidad]="'Departamento'" [prefijo]="''"
+                                        [esquema]="'catalogos'" [tipo]="'gestion-divpolitica/departamento'" [valor]="''"
+                                        [nullable]='true' [required]="true"
+                                        (onItemSelected)="updateMunicipioBorn($event)" formControlName="id"
+                                        #departamentBorn>
+                                    </sbc-cat-entidades-combo>
+                                    <!--
+                                <mat-form-field appearance="standard">
+                                <mat-label>Departamento</mat-label>
+                                <input matInput #departamento maxlength="50" formControlName="nombre" />
+                                <mat-hint align="end">{{ departamento.value.length }} / 50</mat-hint>
+                            </mat-form-field>
+                           -->
+                                </div>
+                                <!--Departamento-->
+
+                                <span class="espacio"></span>
+                                <!--Municipio-->
+                                <div class="col" formGroupName="municipio" *ngIf="!isForeign">
+                                    <sbc-cat-entidades-combo [entidad]="'Municipio'" [prefijo]="'municipio'"
+                                        [esquema]="'catalogos'" [tipo]="'gestion-divpolitica/municipio'" [valor]="''"
+                                        [required]='true' (onItemSelected)='municipioBornSelected($event)'
+                                        formControlName="id" #municipioBorn>
+                                    </sbc-cat-entidades-combo>
+                                    <!--
+                                <mat-form-field appearance="standard">
+                                <mat-label>Municipio</mat-label>
+                                <input matInput #municipio maxlength="50" formControlName="nombre" />
+                                <mat-hint align="end">{{ municipio.value.length }} / 50</mat-hint>
+                            </mat-form-field>
+                            -->
+                                </div>
+                                <!--municipio-->
+
+                                <span class="espacio"></span>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!--División Política | Nacimiento-->
+
+                    <!-- División Política | Residencia -->
+                    <div class="row">
+                        <div class="col-12 barra_blanca centrado_vertical conPadding">
+                            <!-- <h6>Información división política de residencia</h6> -->
+                            <h6> Residencia </h6>
+                            <!-- <mat-slide-toggle class="m-2" [color]="accent" [checked]="'false'" [disabled]="'false'"
+                        (change)="allowEdit($event)">
+                        <h6 class="m-1"> Actualizar </h6>
+                    </mat-slide-toggle> -->
+                        </div>
+                        <div class="row">
+                            <div class="col ml-2 alert px-2 alert-danger text-center" role="alert"
+                                *ngIf="infoResidenceIncomplete">
+                                Complete la información de residencia actual
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="row conPadding" formGroupName="residencia">
+                                <span class="espacio"></span>
+                                <!--Departamento-->
+                                <div class="col" formGroupName="departamento">
+                                    <sbc-cat-entidades-combo [entidad]="'Departamento'" [prefijo]="''"
+                                        [esquema]="'catalogos'" [tipo]="'gestion-divpolitica/departamento'" [valor]="''"
+                                        [nullable]='true' [required]="true" (onItemSelected)="updateMunicipio($event)"
+                                        formControlName="id" #departamentResidencia>
+                                    </sbc-cat-entidades-combo>
+
+                                    <!--
+
+                            <mat-form-field appearance="standard">
+                                <mat-label>Departamento</mat-label>
+                                <input matInput #departamento maxlength="50" formControlName="nombre" required />
+                                <mat-hint align="end">{{ departamento.value.length }} / 50</mat-hint>
+                            </mat-form-field>
+
+                            -->
+                                </div>
+                                <!--Departamento-->
+                                <span class="espacio"></span>
+                                <!--Municipio-->
+                                <div class="col" formGroupName="municipio">
+                                    <sbc-cat-entidades-combo [entidad]="'Municipio'" [prefijo]="'municipio'"
+                                        [esquema]="'catalogos'" [tipo]="'gestion-divpolitica/municipio'"
+                                        [referencia]="departamentResidencia" [required]='true'
+                                        (onItemSelected)='updateComunidades($event)' formControlName="id" #nttMncp>
+                                    </sbc-cat-entidades-combo>
+                                    <!-- <sbc-cat-entidades-combo [entidad]="'Municipio'" [prefijo]="'municipio'"
+                                [esquema]="'catalogos'" [tipo]="'gestion-divpolitica/municipio'" [valor]="''"
+                                [required]='true' (onItemSelected)='updateComunidades($event)' formControlName="id"
+                                #nttMncp>
+                            </sbc-cat-entidades-combo> -->
+                                    <!--
+                                <mat-form-field appearance="standard">
+                                <mat-label>Municipio</mat-label>
+                                <input matInput #municipio maxlength="50" formControlName="nombre" required />
+                                <mat-hint align="end">{{ municipio.value.length }} / 50</mat-hint>
+                            </mat-form-field>
+                            -->
+                                </div>
+                                <!--Municipio-->
+                                <span class="espacio"></span>
+                                <!--Comunidad-->
+                                <div class="col" formGroupName="comunidad">
+                                    <sbc-cat-entidades-combo [entidad]="'Comunidad'" [prefijo]="'comunidad'"
+                                        [esquema]="'catalogos'" [tipo]="'gestion-divpolitica/comunidad'" [valor]="''"
+                                        [required]='true' (onItemSelected)="comunitySelected($event)"
+                                        formControlName="id" #nttCmnd>
+                                    </sbc-cat-entidades-combo>
+                                    <!--
+                                <mat-form-field appearance="standard">
+                                <mat-label>Comunidad</mat-label>
+                                <input matInput #comunidad maxlength="50" formControlName="nombre" required />
+                                <mat-hint align="end">{{ comunidad.value.length }} / 50</mat-hint>
+                            </mat-form-field>
+                            -->
+                                </div>
+                                <!--Comunidad-->
+                                <span class="espacio"></span>
+                            </div>
+
+                            <div class="row conPadding" formGroupName="residencia">
+                                <span class="espacio"></span>
+                                <!--Distrito-->
+                                <div class="col col-xs-12" formGroupName="distrito">
+                                    <mat-form-field appearance="standard">
+                                        <mat-label>Distrito</mat-label>
+                                        <input matInput #distrito maxlength="50" formControlName="nombre" />
+                                        <mat-hint align="end">{{ distrito.value.length }} / 50</mat-hint>
+                                    </mat-form-field>
+                                </div>
+                                <!--Distrito-->
+
+                                <span class="espacio"></span>
+                                <!--Dirección Domicilio-->
+                                <div class="col-md-8 col-xs-12">
+                                    <mat-form-field appearance="standard">
+                                        <mat-label>Dirección de domicilio</mat-label>
+                                        <input matInput #domicilio formControlName="personaDireccion" required
+                                            maxlength="500" (blur)="sendPerson()" />
+                                        <mat-hint align="end">{{ domicilio.value.length }} / 500</mat-hint>
+                                        <mat-hint align="start" class="text-danger animated shake delay-1s"
+                                            *ngIf="controlHasError('required', personaForm,['divisionPolitica', 'residencia', 'personaDireccion'])">
+                                            Valor es requerido
+                                        </mat-hint>
+                                        <mat-hint align="start" class="text-danger animated shake delay-1s"
+                                            *ngIf="controlHasError('maxlength', personaForm,['divisionPolitica', 'residencia', 'personaDireccion'])">
+                                            Se
+                                            excedió límite de
+                                            carácteres
+                                        </mat-hint>
+                                        <!--<mat-hint class="text-danger animated shake delay-1s"
+                                    *ngIf="personaForm.controls['divisionPolitica'].controls['residencia'].controls['personaDireccion'].hasError('maxlength')"
+                                    align="start">Se
+                                    excedió límite de
+                                    carácteres</mat-hint>-->
+                                    </mat-form-field>
+                                </div>
+                                <!--Distrito-->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- División Política | Residencia -->
+
+                </div>
+                <!--División Política-->
+            </mat-expansion-panel>
+
+            <mat-expansion-panel [expanded]="validateExpandPanel()">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Información de Red de Servicio
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        Sectorización / Red de Servicio
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <!--Red de Servicio-->
+                <div formGroupName="redServicio">
+                    <div class="row">
+                        <div class="col-12 barra_blanca centrado_vertical conPadding">
+                            <!-- <h6>Información red de servicio y sectorización de residencia</h6> -->
+                            <h6>Sector y Red de Servicio por residencia</h6>
+                        </div>
+
+                        <div class="col animated shake delay-2s" *ngIf="errorComunity">
+                            <app-error-detail [error]="error"></app-error-detail>
+
+                        </div>
+
+                        <div class="col" *ngIf="!errorComunity" formGroupName="residencia">
+                            <div class="row conPadding">
+                                <!--Sector de Residencia-->
+                                <div class="col" formGroupName="sector">
+                                    <mat-form-field appearance="standard">
+                                        <mat-label>Sector</mat-label>
+                                        <input matInput #sector maxlength="50" formControlName="nombre" />
+                                        <mat-hint align="end">{{ sector.value.length }} / 50</mat-hint>
+                                    </mat-form-field>
+                                </div>
+                                <!--Sector de Residencia-->
+
+                                <span class="espacio"></span>
+                                <!--Unidad de Salud de Residencia-->
+                                <div class="col" formGroupName="unidadSalud">
+                                    <mat-form-field appearance="standard">
+                                        <mat-label>Unidad de salud</mat-label>
+                                        <input matInput #unidadSalud maxlength="50" formControlName="nombre" />
+                                        <mat-hint align="end">{{ unidadSalud.value.length }} / 50</mat-hint>
+                                    </mat-form-field>
+                                </div>
+                                <!--Unidad de Salud de Residencia-->
+
+                                <span class="espacio"></span>
+
+                                <!--Entidad Administrativa de Residencia-->
+                                <div class="col" formGroupName="entidadAdministrativa">
+                                    <mat-form-field appearance="standard">
+                                        <mat-label>Entidad administrativa</mat-label>
+                                        <input matInput #entidadAdmtva maxlength="50" formControlName="nombre" />
+                                        <mat-hint align="end">{{ entidadAdmtva.value.length }} / 50</mat-hint>
+                                    </mat-form-field>
+                                </div>
+                                <!--Unidad de Salud de Residencia-->
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <!--Red de Servicio-->
+            </mat-expansion-panel>
+        </mat-accordion>
+
+        <div class="row" *ngIf="showActionsAddPerson">
+            <hr />
+            <div class="d-flex flex-row-reverse">
+                <div class="col m-2">
+                    <button mat-raised-button color="accent" (click)="cancel()">
+                        Cancelar
+                        <mat-icon matSuffix>cancel</mat-icon>
+                    </button>
+                </div>
+                <div class="col m-2">
+                    <button mat-raised-button color="primary" (click)="save()" [disabled]="!frmPrs.valid">
+                        Guardar
+                        <mat-icon matSuffix>save</mat-icon>
+                    </button>
+
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>

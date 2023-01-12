@@ -1,0 +1,90 @@
+<!-- controles de Minsa personal -->
+<form [formGroup]="formulario">
+    <ng-container *ngIf="!mostrarNombres">
+
+        <mat-form-field appearance="outline">
+            <mat-label>{{entidad}}</mat-label>
+            <button mat-mini-fab color="primary" matSuffix (click)="BuscarIdentificacion()" [disabled]="!formulario.valid">
+                        <mat-icon>search</mat-icon>
+                    </button>
+            <input #identificacion type="text" [placeholder]="entidad" aria-label="Minsa Persona" matInput formControlName="valor" [matAutocomplete]="auto" [required]="requerido" (keydown.Space)="MostrarCampoNombres()">
+            <mat-hint align="start">
+                <strong class="text-info">
+                            (*) Para habilitar búsqueda por nombre, presionar tecla espaciadora
+                        </strong>
+            </mat-hint>
+            <mat-error *ngIf="this.formulario.get('identificacion').invalid && requerido">
+                Requerido
+            </mat-error>
+            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                <mat-option *ngFor="let personal of arrayMinsaPersonal" [value]="personal" (click)="Seleccionar(personal)">
+                    <b>{{personal.codigo}}</b> {{"-"}} {{personal.persona.primernombre}} {{personal.persona.segundonombre}} {{personal.persona.primerapellido}} {{personal.persona.segundoapellido}}
+                </mat-option>
+            </mat-autocomplete>
+
+            <ng-container *ngIf="this.showProgress">
+                <mat-progress-bar [color]="'accent'" [mode]="'indeterminate'" [value]="20" [bufferValue]="50">
+                </mat-progress-bar>
+            </ng-container>
+
+        </mat-form-field>
+
+
+    </ng-container>
+    <ng-container *ngIf="mostrarAlerta">
+        <div class="row animated fadeIn">
+            <div class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="alert alert-info">
+                    <span>
+                        <strong>{{mensaje}}</strong>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="mostrarNombres">
+        <div class="row">
+            <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <mat-form-field appearance="fill">
+                    <mat-label>Primer nombre</mat-label>
+                    <input #pNombre matInput type="text" formControlName="primernombre">
+                    <mat-error *ngIf="this.formulario.get('primernombre').invalid">
+                        Requerido
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <mat-form-field appearance="fill">
+                    <mat-label>Primer apellido</mat-label>
+                    <input #pApellido matInput type="text" formControlName="primerapellido">
+                    <mat-error *ngIf="this.formulario.get('primerapellido').invalid">
+                        Requerido
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <mat-form-field appearance="fill">
+                    <mat-label>Segundo nombre</mat-label>
+                    <input #sNombre matInput type="text" formControlName="segundonombre">
+                </mat-form-field>
+            </div>
+            <div class="col-12 col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <mat-form-field appearance="fill">
+                    <mat-label>Segundo apellido</mat-label>
+                    <input #sApellido matInput type="text" formControlName="segundoapellido">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <button mat-flat-button color="warn" class="pull-right botones" (click)="Cancelar()">
+                    <mat-icon>close</mat-icon> Cancelar
+                </button>
+                <button mat-flat-button color="primary" class="pull-right botones" [disabled]="!formulario.valid" (click)="BuscarPorNombres()">
+                    <mat-icon>search</mat-icon> Buscar
+                </button>
+            </div>
+        </div>
+    </ng-container>
+</form>

@@ -1,0 +1,77 @@
+<mat-form-field
+  #mnFrmFld
+  style="width: 100%"
+  *ngIf="datos"
+  appearance="outline"
+  ngDefaultControl
+>
+  <mat-label>{{ entidad }}</mat-label>
+  <mat-select
+    [formControl]="selectCtrl"
+    style="width: 100%"
+    [required]="required"
+  >
+    <mat-option>
+      <ngx-mat-select-search
+        *ngIf="!hideFilter"
+        [formControl]="filterCtrl"
+        [placeholderLabel]="placeholderSearch"
+        [noEntriesFoundLabel]="false"
+        appTextTransform
+      >
+        <mat-icon ngxMatSelectSearchClear>clear</mat-icon>
+      </ngx-mat-select-search>
+    </mat-option>
+    <mat-option
+      *ngFor="let item of filteredItems | async; let i = index"
+      [value]="item"
+      color="red"
+    >
+      <span *ngIf="item.pasivo" style="color: red"
+        >{{ item.codigo }}-<strong
+          ><i
+            ><del>{{
+              item.nombre ||
+                item.valor ||
+                item.descripcion ||
+                item.nombreCompleto
+            }}</del></i
+          ></strong
+        ></span
+      >
+      <span *ngIf="!item.pasivo">{{
+        item.nombre || item.valor || item.descripcion || item.nombreCompleto
+      }}</span>
+    </mat-option>
+  </mat-select>
+  <mat-error *ngIf="selectCtrl.hasError('required')">Requerido</mat-error>
+</mat-form-field>
+
+<!-- Detalle de error -->
+<ng-container *ngIf="error">
+  <mat-form-field style="width: 100%" appearance="standard">
+    <mat-label [style.color]="'red'">{{ entidad }}</mat-label>
+    <input [style.color]="'red'" matInput value="ERROR DE CARGA" readonly />
+    <mat-icon
+      [style.color]="'red'"
+      matSuffix
+      (click)="showErrorDetail()"
+      style="cursor: pointer"
+      >info</mat-icon
+    >
+    <mat-hint [style.color]="'red'" align="end"
+      >Detalles del error ^&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</mat-hint
+    >
+  </mat-form-field>
+</ng-container>
+
+<!-- Barra de progreso -->
+<ng-container *ngIf="showProgress && !error">
+  <span style="width: 100%">Cargando {{ entidad }}...</span>
+  <mat-progress-bar
+    [color]="'accent'"
+    [mode]="'indeterminate'"
+    [value]="20"
+    [bufferValue]="50"
+  ></mat-progress-bar>
+</ng-container>

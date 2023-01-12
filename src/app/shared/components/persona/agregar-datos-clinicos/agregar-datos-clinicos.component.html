@@ -1,0 +1,51 @@
+<div class="row">
+    <div class="col-12 barra_blanca centrado_vertical">
+        <h6>Consulta de Historia Clínica</h6>
+    </div>
+</div>
+
+<ng-container *ngIf="mostrarBusqueda">
+    <div class="row  cuerpo_blanco shadow p-3 mb-5 bg-white rounded">
+        <div class="col col-xs 12 col-12 col-md-12 col-lg-12">
+            <form [formGroup]="formulario">
+                <mat-radio-group  formControlName="opcionesBusqueda" class="row">
+                    <mat-radio-button class="col-4" value="1" (change)="ToogleRecienNacido($event)">
+                        Es recien nacido
+                    </mat-radio-button>
+                    <mat-radio-button class="col-4" value="2" (change)="ToogleEsDesconocido($event)">
+                        Es desconocido
+                    </mat-radio-button>
+                </mat-radio-group>
+             <!--   <mat-radio-group *ngIf="HabilitarPorRoles('PERMISOS_USERS|BUSCAR')"  formControlName="opcionesBusqueda" class="row">
+                    <mat-radio-button class="col-4" value="1" (change)="ToogleRecienNacido($event)">
+                      Es recien nacido</mat-radio-button>
+                    <mat-radio-button class="col-4" value="2" (change)="ToogleEsDesconocido($event)">
+                      Es desconocido</mat-radio-button>
+                  </mat-radio-group>
+            -->
+            </form>
+        </div>
+        <div class="col col-xs 12 col-12 col-md-12 col-lg-12">
+            <ng-container *ngIf="!this.habilitarRegistroDesconocido">
+              <app-buscador-personas [busquedaPorTipo]="busquedaPorTipo" [parametrosBusqueda]="busqueda" (cancelarEvento)="ObtenerFormulario($event)"> </app-buscador-personas>
+            </ng-container>
+
+            <ng-container *ngIf="this.habilitarRegistroDesconocido">
+              <app-crear-persona-desconocida (cancelarEvento)="ObtenerFormulario($event)"></app-crear-persona-desconocida>
+            </ng-container>
+        </div>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="mostrarDatosClinicos">
+    <div class="row">
+        <div class="col col-12 col-xs-12 col-md-12 col-lg-12">
+            <button mat-flat-button color="accent" class="pull-right espaciado-botones" (click)="NuevaBusqueda()">
+              <mat-icon>search</mat-icon>Buscar
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <app-paciente-detalle [momentoDato]="momentoDato" [mostrarAdmision]="false"></app-paciente-detalle>
+    </div>
+</ng-container>

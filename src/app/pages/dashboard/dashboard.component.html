@@ -1,0 +1,118 @@
+<ng-container *ngIf="showDashBoard; else notAllowed">
+  <div class="row pt-4">
+    <div class="col-md-4 m-10">
+      <mat-card class="card-main card-HC">
+        <div class="row">
+          <div
+            class="col-12 d-flex justify-content-between align-items-center mb-4"
+          >
+            <span class="texto">Historia Clínica</span>
+            <i class="far fa-address-card-o fa-3x"></i>
+          </div>
+          <div class="divider"></div>
+          <div class="col-12">
+            <button
+              [routerLink]="['/historia-clinica']"
+              class="btn btn-outline-light pull-right"
+            >
+              ENTRAR<i class="fa fa-check ms-1"></i>
+            </button>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+    <div class="col-md-4 m-10">
+      <mat-card class="card-main card-RC">
+        <div class="row">
+          <div
+            class="col-12 d-flex justify-content-between align-items-center mb-4"
+          >
+            <span class="texto">Resumen Clínico</span>
+            <i class="far fa-list-alt fa-3x"></i>
+          </div>
+          <div class="divider"></div>
+          <div class="col-12">
+            <button
+              [routerLink]="['/buzon-resumen-clinico']"
+              class="btn btn-outline-light pull-right"
+            >
+              ENTRAR<i class="fa fa-check ms-1"></i>
+            </button>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+    <div class="col-md-4 m-10">
+      <mat-card class="card-main card-Guia">
+        <div class="row">
+          <div
+            class="col-12 d-flex justify-content-between align-items-center mb-4"
+          >
+            <span class="texto">Guía Rápida</span>
+            <i class="far fa-file-pdf-o fa-3x"></i>
+          </div>
+          <div class="divider"></div>
+          <div class="col-12">
+            <button
+              [routerLink]="['']"
+              class="btn btn-outline-light pull-right"
+            >
+              ENTRAR<i class="fa fa-check ms-1"></i>
+            </button>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+    <div class="col-md-4 m-10">
+      <mat-card class="card-main card-Rep">
+        <div class="row">
+          <div
+            class="col-12 d-flex justify-content-between align-items-center mb-4"
+          >
+            <span class="texto">Reporte Nominal de Historia Clinica</span>
+            <i class="fa fa-files-o fa-3x"></i>
+          </div>
+          <div class="divider"></div>
+          <div class="col-12">
+            <button
+              [routerLink]="['/reportes']"
+              class="btn btn-outline-light pull-right"
+            >
+              ENTRAR<i class="fa fa-check ms-1"></i>
+            </button>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+  <!-- <app-reporte-nominal-historia-clinica></app-reporte-nominal-historia-clinica>  -->
+  <!-- <app-historia-clinica-adulto></app-historia-clinica-adulto> -->
+  <!-- <app-hitoria-clinica-pediatrica></app-hitoria-clinica-pediatrica> -->
+  <!-- <app-pediatrica-paso-uno></app-pediatrica-paso-uno> -->
+  <!-- <app-historia-clinica-adulto></app-historia-clinica-adulto> -->
+  <!-- <app-historia-clinica-adolescente></app-historia-clinica-adolescente> -->
+  <!-- <app-buzon-resumen-clinico></app-buzon-resumen-clinico> -->
+  <!-- <app-solicitud-rc></app-solicitud-rc> -->
+  <!-- <app-antecedentes-patologicos></app-antecedentes-patologicos> -->
+  <!-- <app-buscador-personas-generico></app-buscador-personas-generico> -->
+  <!-- <app-form-resumen-clinico></app-form-resumen-clinico> -->
+  <!-- <app-examen-fisico></app-examen-fisico> -->
+
+  <!--<app-charts></app-charts>-->
+</ng-container>
+
+<ng-template #notAllowed>
+  <div class="container py-5">
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <!-- <h3>Bienvenido al {{nameSystemModule | titlecase }} </h3> -->
+        <img
+          src="assets/images/LogoGOBMINSA.svg"
+          class="img-fluid logo"
+          alt="Bienvenido"
+        />
+      </div>
+    </div>
+    <!-- HTML para No renderizar DASHBOARD -->
+  </div>
+</ng-template>

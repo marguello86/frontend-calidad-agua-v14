@@ -1,0 +1,66 @@
+<ngx-spinner bdColor="rgba(0,0,0,0.8)" size="large" color="#ffffff" type="ball-pulse" [fullScreen]= true>
+  <p style="color: white"> Espere un momento... </p>
+</ngx-spinner>
+
+<div class="contenedor_azul">
+  <div *ngIf="principal">
+    <!--nuevo login-->
+    <div class="flex_container">
+      <div class="fondo_form">
+        <div class="logo">
+          <img src="assets/images/LogoGOBMINSA.png" alt="Logo Ministerio de Salud" role="img" />
+        </div>
+        <div class="barra_verde">
+          <span>Inicio de sesión</span>
+        </div>
+        <div class="row">
+          <div class="user_icon">
+            <img src="assets/images/Icon awesome-user-circle.png" width="80" height="80" alt="Icono de usuario"
+              role="img" />
+          </div>
+          <div class="div_texbox" [formGroup]="fGroupUser">
+            <mat-form-field id="mffUsrnm" class="input-full-width" color="accent">
+              <input class="estilo_auto_complete" id="username" formControlName="username"
+                matTooltip="¿Tienes un usuario MINSA?" matInput placeholder="{{ msgValidarUser }}" type="text" required
+                (keydown.enter)="handleEnter($event)" #usrnm />
+              <mat-icon matSuffix>account_circle</mat-icon>
+              <mat-hint align="end">{{usrnm.value.length}} / 50</mat-hint>
+            </mat-form-field>
+            <div class="div_texbox">
+              <img class="material-icons" style="margin-right: 1%;"
+                src="assets/images/round-account-button-with-user-inside.png" />
+              <button id="verificarCuenta" type="submit" (click)="validateUsername()" matTooltip="VERIFICAR CUENTA"
+                color="accent" [disabled]="!fGroupUser.valid" mat-raised-button color="accent">
+                Siguiente
+              </button>
+
+            </div>
+
+            <br />
+          </div>
+          <div class="div_textbox">
+            <div id="validaciones" style="display: none;">
+              <span class="campoRequerido">{{ campoRequerido }}</span>
+            </div>
+            <div class="daaWTb" style="display: none;">
+              <button mat-button color="primary" id="forgetpassword" (click)="recordarUsuario()">
+                ¿Olvidó su nombre de usuario?
+              </button>
+            </div>
+          </div>
+          <div class="div_textbox d-flex justify-content-center">
+            <div class="final">
+              Ministerio de Salud Nicaragua, {{anioSistema | date: 'yyyy'}}
+            </div>
+          </div>
+          <mat-progress-spinner *ngIf="mode === 'indeterminate'" class="loading" [color]="color" [mode]="mode"
+            [value]="value">
+          </mat-progress-spinner>
+        </div>
+      </div>
+    </div>
+    <!--nuevo login-->
+    <div id="recordarUsuario" *ngIf="!principal">
+    </div>
+  </div>
+</div>

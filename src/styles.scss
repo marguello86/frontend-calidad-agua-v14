@@ -1,0 +1,292 @@
+@font-face {
+    font-family: "Open Sans";
+    src: url(./assets/fonts/Open_Sans/OpenSans-SemiBold.ttf) format("opentype");
+  }
+  
+  @font-face {
+    font-family: "Open Sans Light";
+    src: url(./assets/fonts/Open_Sans/OpenSans-Regular.ttf) format("opentype");
+  }
+
+  @import "../node_modules/@angular/material/prebuilt-themes/indigo-pink.css";
+  @import "../src/assets/CSS/normalize.scss";
+  @import "../src/assets/CSS/variables.scss";
+  @import "../node_modules/bootstrap/dist/css/bootstrap.css";
+  @import "../src/assets/CSS/bootstrapReset.scss";
+  @import "../src/assets/CSS/tema.scss";
+  //@import "../src/assets/CSS/animaciones.scss";
+  
+  /*
+  
+  Descripción: Plantilla Personalizada para sistemas de Ministerio de Salud
+  Fecha de creación: 07/02/2020
+  Autor: Desarrollo de Sistemas
+  
+  Anotaciones:
+  Import de vairables.scss podemos sacar los valores de uso repetitivo como fondos, por favor hacer uso de estas variables para reutilizar código
+  Comentarios:
+  
+  Para mayor entendimiento, este será la clase principal donde aplicaremos estilos, animaciones y uso de variables globales de CSS,
+  a su vez debemos separar por sección y comentar para que sirve cada sección para mejorar el mantenimiento visual de la plantilla.
+  */
+  
+  /* Top Nav */
+  
+  .main-header {
+    position: -webkit-sticky;
+    position: sticky;
+    display: inline-block;
+    top: 0;
+    padding: 0;
+  }
+  .main-body {
+    padding: 0;
+  }
+  
+  :host {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  
+  .cabecera {
+    background-color: #3f51b5 !important;
+    color: #eee !important;
+    font-size: 12px;
+  }
+  
+  .paginador {
+    margin-left: 2%;
+    width: 98%;
+    margin-bottom: 2%;
+  }
+  
+  .tabla {
+    margin-left: 2%;
+    width: 95%;
+    font-size: 12px;
+  }
+  
+  .mat-row {
+    font-size: 11px;
+    cursor: pointer;
+  }
+  .text-right {
+    text-align: right;
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  @media screen and (max-width: 960px) {
+    .mat-table {
+      border: 0;
+      vertical-align: middle;
+    }
+    .mat-table caption {
+      font-size: 1em;
+    }
+    .mat-table .mat-header-cell {
+      border: 10px solid;
+      clip: rect(0 0 0 0);
+      height: 1px;
+      margin: -1px;
+      padding: 0;
+      position: absolute;
+      width: 1px;
+    }
+    .mat-table .mat-row {
+      border-bottom: 5px solid #ddd;
+      display: block;
+    }
+    /*
+    .mat-table .mat-row:nth-child(even) {background: #CCC}
+    .mat-table .mat-row:nth-child(odd) {background: #FFF}
+    */
+    .mat-table .mat-cell {
+      border-bottom: 1px solid #ddd;
+      display: block;
+      font-size: 1em;
+      text-align: right;
+      font-weight: bold;
+      height: 30px;
+      margin-bottom: 4%;
+      margin-right: 3%;
+      margin-left: 3%;
+    }
+    .mat-table .mat-cell:before {
+      /*
+      * aria-label has no advantage, it won't be read inside a table
+      content: attr(aria-label);
+      */
+      content: attr(data-label);
+      float: left;
+      text-transform: uppercase;
+      font-weight: normal;
+      font-size: 0.85em;
+    }
+    .mat-table .mat-cell:last-child {
+      border-bottom: 0;
+    }
+    .mat-table .mat-cell:first-child {
+      margin-top: 4%;
+    }
+  }
+  
+  .mat-dialog-actions {
+    padding: 12px 0;
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: -24px;
+    float: right;
+  }
+  
+  body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+  }
+  
+  // HOJAS DE ESTILO PARA FORMULARIOS DE HISTORIA CLINICA
+  
+  
+  
+  
+    .mat-form-field-appearance-outline .mat-form-field-outline {
+  
+       color: #3f51b5;
+       opacity: 0.3 !important;
+    }
+  
+  
+  
+  .ancho-button {
+    width: 100%;
+  }
+  
+  .tooltip-red {
+    background: #b71c1c;
+  }
+  
+  .mat-expansion-panel {
+    background-color: none;
+  }
+  
+  .mat-expansion-panel-header {
+    background-color: #3f51b5 !important;
+    transition: all 0.5 ease-in-out;
+    border: 0.1px solid #fff;
+  }
+  .mat-expansion-panel-header:hover {
+    background-color: #35449b !important;
+  }
+  
+  .iconColor {
+    color: #fff;
+  }
+  
+  .fontSize {
+    font-size: 20px;
+    color: white;
+  }
+  
+  mat-step-header:focus {
+    background-color: antiquewhite !important;
+  }
+  
+  tr.mat-header-row {
+    // background-color: #7ebb4a;
+    background-color: #3f51b5;
+    text-transform: uppercase;
+    font-size: 20px;
+    // background-color: #f1f1f1;
+    // background-color: #ee931f;
+    // background-color: #00bcd4;
+  }
+  
+  .mat-fab.mat-primary,
+  .mat-mini-fab.mat-primary {
+    background-color: #ff4081;
+  }
+  
+  .mat-cell,
+  .mat-footer-cell {
+    font-size: 13px !important;
+  }
+  
+  .example-spacer {
+    flex: 1 1 auto;
+  }
+  
+  .margen-titulo {
+    margin-top: 20px;
+    font-weight: 600;
+  }
+  
+  // mat-action-row {
+  //     background-color: #5f72e2 !important;
+  // }
+  
+  
+  
+  /*################## Estilos numeración y texto de Steppers ##########################################*/
+  .mat-step-icon {
+    border-radius: 50%;
+    flex-shrink: 0;
+    position: relative;
+  }
+  
+  .mat-step-header .mat-step-icon {
+    background-color: #3f51b5;
+    height: 38px;
+    width: 38px;
+    color: #fff;
+    font-size: 1.5em;
+  }
+  
+  .mat-step-text-label {
+    font-size: 1.3em;
+    color: #3f51b5;
+    font-weight: 200;
+  }
+  
+  .btn-mx-2 {
+    background-color: #02A7F0;
+    color: white;
+    margin:0.5em !important;
+  }
+  
+  .btn-mx-2:hover {
+    background-color: #ff4081;
+    color: white;
+    margin:0.5em !important;
+  }
+  
+  .btn-float-left-two {
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 0.5em;
+  }
+  
+  .tooltip-class{
+    background: #02A7F0 !important;
+    font-size: 14px !important;
+  }
+  
+  .contenido-ts {
+    font-size: 12px !important;
+    color: rgb(255, 0, 128);
+    font-weight: bold;
+  }
+  
+  .mat-row:hover {
+    background-color: #cff4fc;
+  }
+  
+  .btn-toogle-filter {
+    text-align: right;
+    margin:0.5em !important;
+  }
+  
+  .colorIcon {
+    color: #3f51b5;
+  }
+  

@@ -1,0 +1,33 @@
+<div class="row">
+    <div class="col">
+        <div class="card border-danger" id="cardError">
+            <!-- Body -->
+            <div class="card-body">
+                <h5 class="card-title text-danger"> {{error.title}} </h5>
+                <hr />
+                <div class="d-flex flex-row">
+                    <div class="mr-3 p-2 align-self-center">
+                        <mat-icon class="icon-error text-danger">error_outline</mat-icon>
+                    </div>
+                    <div class="mr-auto p-2 align-self-center">
+                        <p class="card-text">{{error.message}}</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Body -->
+            <!-- Footer -->
+            <div class="card-footer text-muted" *ngIf="error.buttons">
+                <div class="row">
+                    <div class="col-xs-12" *ngFor="let button of error.buttons">
+                        <button class="mx-2" mat-raised-button [color]="button.color" [disabled]="button.disabled"
+                            (click)="captureAction(button.code)">
+                            {{ button.name }}
+                            <mat-icon matSuffix>{{ button.icon.name }}</mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- Footer -->
+        </div>
+    </div>
+</div>

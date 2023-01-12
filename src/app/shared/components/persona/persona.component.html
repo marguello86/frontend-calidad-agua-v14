@@ -1,0 +1,30 @@
+<ng-container *ngIf="!dontShowComponent">
+    <ng-container [ngSwitch]="mode">
+        <div *ngSwitchCase="editorC">Editor de Persona</div>
+        <div *ngSwitchCase="resultC">
+            <app-list-personas [busqueda]="busquedaPorTipo" [data]="listPersona" [paginacion]="paginator"
+                [typeParent]="parentRequest">
+            </app-list-personas>
+            <div class="row">
+                <div class="col-2">
+                    <button class="btn" mat-raised-button color="accent" (click)="cancelResult()">
+                        Cancelar <i class="fa fa-times-circle"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div *ngSwitchDefault>
+            <app-buscador-personas [busquedaPorTipo]="busquedaPorTipo" [allowCreatePerson]="hasRoleForCreated"
+                (result)="hasData($event)" (paginacion)="hasPaginacion($event)"
+                (showDialog)="loadDialogEditorPerson($event)">
+            </app-buscador-personas>
+        </div>
+    </ng-container>
+</ng-container>
+<ng-container *ngIf="dontShowComponent">
+    <div class="row conPadding" *ngIf="deniedAccess">
+        <div class=" col animated shake delay-1s">
+            <app-error-detail [error]="deniedAccess" (executeAction)="captureAction($event)"></app-error-detail>
+        </div>
+    </div>
+</ng-container>

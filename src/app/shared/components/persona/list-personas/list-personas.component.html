@@ -1,0 +1,130 @@
+<div class="col-12 barra_blanca centrado_vertical">
+    <h6>Resultados de Búsqueda</h6>
+</div>
+<span class="espacio"></span>
+<ng-container *ngIf="dataActivePage">
+    <div class="row" *ngFor="let persona of dataActivePage">
+        <div [ngClass]="classPersonItem">
+            <mat-toolbar [ngClass]="getClassFromSexCode(persona.sexo.codigo, 'title')" style="width: 100%;">
+                <span class="m-1"> {{persona.registro}} - </span>
+                <span>{{persona.primerNombre}}
+                    {{persona.segundoNombre}}
+                    {{persona.primerApellido}}
+                    {{persona.segundoApellido}}</span>
+                <span style="flex: 1 1 auto;"></span>
+                <button class="bg-light text-dark" mat-stroked-button (click)="ir(persona)"> Seleccionar
+                    <mat-icon aria-label="Input">input</mat-icon>
+                </button>
+            </mat-toolbar>
+            <mat-card [ngClass]="getClassFromSexCode(persona.sexo.codigo, 'content')">
+                <mat-card-content>
+                    <div class="row">
+                        <div class="avatar">
+                            <img [src]="getAvatarProfile(persona.sexo.codigo)" alt="Foto Perfil de Paciente"
+                                class="px-profile">
+                        </div>
+                        <div class="col">
+                            <div class="row nombres">
+                                <div class="col-lg-4">
+                                    <p *ngIf="persona.paciente.codigoExpediente.valor"> Expediente unico:
+                                        {{persona.paciente.codigoExpediente.valor}}</p>
+                                    <p *ngIf="!persona.paciente.codigoExpediente.valor"> Expediente unico: - - - - -
+                                        -
+                                    </p>
+                                    <p> Tipo de Identificación: {{persona.identificacion.nombre}}</p>
+                                    <p> Número de Identificación: {{persona.identificacion.valor}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="row" *ngIf="persona.fallecimiento.fallecido">
+                                <div class="col-lg-2 ml-2 alert px-2 alert-dark text-center" role="alert">
+                                    Estado: Difunto
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <p><strong>Sexo: </strong> {{persona.sexo.valor}} </p>
+                        </div>
+                        <div class="col">
+                            <p><strong>Fecha Nacimiento: </strong> {{persona.fechaNacimiento}} </p>
+                        </div>
+                        <div class="col" *ngIf="persona.edad.anios !== '000'">
+                            <p> <strong>Edad Exacta</strong>
+                                {{persona.edad.anios}} años,
+                                {{persona.edad.meses}} meses,
+                                {{persona.edad.dias}} días</p>
+                        </div>
+                        <div class="col" *ngIf="persona.edad.anios === '000' && persona.edad.meses !== '00'">
+                            <p> <strong>Edad Exacta</strong>
+                                {{persona.edad.meses}} meses,
+                                {{persona.edad.dias}} días</p>
+                        </div>
+                        <div class="col" *ngIf="persona.edad.anios === '000' && persona.edad.meses === '00'">
+                            <p> <strong>Edad Exacta</strong>
+                                {{persona.edad.dias}} días </p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <p> <strong>Nacimiento</strong> </p>
+                            <p>Pais:
+                                {{!persona.divisionPolitica.nacimiento.pais.nombre ? '- - - - - -' :  persona.divisionPolitica.nacimiento.pais.nombre}}
+                            </p>
+                            <p>Departamento:
+                                {{!persona.divisionPolitica.nacimiento.departamento.nombre ? '- - - - - -' : persona.divisionPolitica.nacimiento.departamento.nombre}}
+                            </p>
+                            <p>Municipio:
+                                {{!persona.divisionPolitica.nacimiento.municipio.nombre ? '- - - - - -' : persona.divisionPolitica.nacimiento.municipio.nombre}}
+                            </p>
+                        </div>
+                        <div class="col">
+                            <p> <strong>Residencia</strong> </p>
+                            <p>Departamento:
+                                {{!persona.divisionPolitica.residencia.departamento.nombre ? '- - - - - -' :persona.divisionPolitica.residencia.departamento.nombre }}
+                            </p>
+                            <p>Municipio:
+                                {{!persona.divisionPolitica.residencia.municipio.nombre ? '- - - - - -' : persona.divisionPolitica.residencia.municipio.nombre }}
+                            </p>
+                            <p *ngIf="persona.divisionPolitica.residencia.comunidad.nombre">Comunidad:
+                                {{persona.divisionPolitica.residencia.comunidad.nombre}} </p>
+                            <p *ngIf="!persona.divisionPolitica.residencia.comunidad.nombre">Comunidad:
+                                - - - - - - </p>
+                            <p *ngIf="persona.divisionPolitica.residencia.distrito.nombre">Distrito:
+                                {{persona.divisionPolitica.residencia.distrito.nombre}} </p>
+                            <p *ngIf="!persona.divisionPolitica.residencia.distrito.nombre">Distrito:
+                                - - - - - - </p>
+                            <p *ngIf="persona.redServicio.residencia.sector.nombre">Sector:
+                                {{persona.redServicio.residencia.sector.nombre}} </p>
+                            <p *ngIf="!persona.redServicio.residencia.sector.nombre">Sector:
+                                - - - - - - </p>
+                        </div>
+                        <div class="col">
+                            <p> <strong>Domicilio</strong> </p>
+                            <p>
+                                {{!persona.divisionPolitica.residencia.personaDireccion ? '- - - - - -' : persona.divisionPolitica.residencia.personaDireccion}}
+                            </p>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+            &nbsp;
+        </div>
+    </div>
+
+
+    <ng-container *ngIf="paginacion && dataActivePage">
+        <mat-paginator [length]="paginacion.cantidadRegistros" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+            showFirstLastButtons (page)="pageChangeEvent($event)">
+        </mat-paginator>
+    </ng-container>
+
+    <button mat-fab class="top" color="basic" *ngIf="isShow" (click)="gotoTop()" aria-label="Subir">
+        <mat-icon matSuffix>vertical_align_top</mat-icon>
+    </button>
+
+</ng-container>

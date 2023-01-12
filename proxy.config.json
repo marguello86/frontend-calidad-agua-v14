@@ -1,0 +1,38 @@
+{
+  "/wsseguridad/*": {
+    "target": "https://portaldev.minsa.gob.ni",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/wscatalogosminsa/*": {
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true,
+    "target": "https://portaldev.minsa.gob.ni"
+  },
+  "/wspersonas/*": {
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true,
+    "target": "https://portaldev.minsa.gob.ni"
+  },
+  "/wspacienteminsa/*": {
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true,
+    "target": "https://portaldev.minsa.gob.ni"
+  },
+  "/wshospitalariominsa/*": {
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true,
+    "target": "https://portaldev.minsa.gob.ni"
+  },
+  "/wsvigilanciaminsa/*": {
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true,
+    "target": "https://portaldev.minsa.gob.ni"
+  }
+}

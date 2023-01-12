@@ -1,0 +1,273 @@
+<ngx-spinner bdColor="rgba(0,0,0,0.8)" size="large" color="#ffffff" type="ball-pulse" [fullScreen]="'true'">
+  <p class="Blanco">Espere un momento...</p>
+</ngx-spinner>
+<div *ngIf="personSelected">
+  <form [formGroup]="emergenciaForm" #frmRes="ngForm">
+    <div class="row p-0">
+      <div class="col-md-12">
+        <mat-card *ngIf="!escondeme">
+          <div class="row">
+            <div class="col-md-12 px-0">
+              <div class="alert alert-info d-flex justify-content-start" role="alert">
+                <b>Expediente Único</b>:
+                {{ personSelected.paciente.codigoExpediente.valor }}
+                <mat-icon matSuffix matTooltip="Copiar" (click)="
+                    CopiarCodigo(
+                      personSelected.paciente.codigoExpediente.valor,
+                      'Número de Identificación'
+                    )
+                  ">
+                  content_copy
+                </mat-icon>
+              </div>
+            </div>
+            <!-- <div class="form-group col-md-6 px-0 animated shake delay-2s">
+              <div class="alert alert-warning" role="alert">
+                <b>Expediente Local</b>: {{ expedienteLocal }}
+              </div>
+            </div> -->
+          </div>
+          <div class="row">
+            <div class="d-none d-sm-block col-sm-4 col col-2 col-md-2">
+              <div class="avatar">
+                <img [src]="getAvatarProfile(personSelected.sexo.codigo)" alt="Foto Perfil de Paciente"
+                  class="px-profile avatar-estilo" />
+              </div>
+            </div>
+            <div class="col col-xs-12 col-sm-8 col-10 col-md-10">
+              <div class="row">
+                <div class="col">
+                  <div class="col">
+                    <span class="titulo">Identificación</span>
+                  </div>
+                  <div class="col">
+                    <span class="contenido">
+                      {{ personSelected.identificacion.valor }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="col-md-12">
+                    <span class="titulo">Nombre Completo</span>
+                  </div>
+                  <div class="col-md-12">
+                    <span class="contenido">
+                      {{ personSelected.primerNombre }}
+                      {{ personSelected.segundoNombre }}
+                      {{ personSelected.primerApellido }}
+                      {{ personSelected.segundoApellido }}
+                    </span>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="col-md-12">
+                    <span class="titulo">Edad &nbsp;</span>
+                  </div>
+                  <div class="col-md-12">
+                    <span class="contenido">{{ personSelected.edad.anios }} años,
+                      {{ personSelected.edad.meses }} meses,
+                      {{ personSelected.edad.dias }} días</span>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="col-md-12">
+                    <span class="titulo">Fecha Nacimiento</span>
+                  </div>
+                  <div class="col-md-12">
+                    <span class="contenido">{{
+                      personSelected.fechaNacimiento | date: 'dd-MM-yyyy'
+                      }}</span>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="col-md-12">
+                    <span class="titulo">Sexo &nbsp;</span>
+                  </div>
+                  <div class="col-md-12">
+                    <span class="contenido">{{
+                      personSelected.sexo.valor
+                      }}</span>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="col-md-12">
+                    <span class="titulo">Teléfono &nbsp;</span>
+                  </div>
+                  <div class="col-md-12">
+                    <span class="contenido">
+                      {{ personSelected.detalle.telefono.numero }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="col-md-12">
+                    <span class="titulo">Departamento &nbsp;</span>
+                  </div>
+                  <div class="col-md-12">
+                    <span class="contenido">{{
+                      personSelected.divisionPolitica.residencia.departamento
+                      .nombre
+                      }}</span>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="col-md-12">
+                    <span class="titulo">Municipio &nbsp;</span>
+                  </div>
+                  <div class="col-md-12">
+                    <span class="contenido">{{
+                      personSelected.divisionPolitica.residencia.municipio
+                      .nombre
+                      }}</span>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="col-md-12">
+                    <span class="titulo">Comunidad &nbsp;</span>
+                  </div>
+                  <div class="col-md-12">
+                    <span class="contenido">
+                      {{
+                      personSelected.divisionPolitica.residencia.comunidad
+                      .nombre
+                      }}
+                    </span>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="col-md-12">
+                    <span class="titulo">Dirección/Domicilio &nbsp;</span>
+                  </div>
+                  <div class="col-md-12">
+                    <span class="contenido">
+                      {{
+                      personSelected.divisionPolitica.residencia
+                      .personaDireccion
+                      }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="col-md-12">
+                    <span class="titulo">Sector Reside &nbsp;</span>
+                  </div>
+                  <div class="col-md-12">
+                    <span class="contenido">{{
+                      personSelected.redServicio.residencia.sector.nombre
+                      }}</span>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="col-md-12">
+                    <span class="titulo">Unidad Reside &nbsp;</span>
+                  </div>
+                  <div class="col-md-12">
+                    <span class="contenido">{{
+                      personSelected.redServicio.residencia.unidadSalud.nombre
+                      }}</span>
+                  </div>
+                </div>
+
+                <div class="col-md-2">
+                  <div class="col-md-12">
+                    <span class="titulo">País &nbsp;</span>
+                  </div>
+                  <div class="col-md-12">
+                    <span class="contenido">{{
+                      personSelected.divisionPolitica.nacimiento.pais.nombre
+                      }}</span>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="col-md-12">
+                    <span class="titulo">Tipo de Sangre &nbsp;</span>
+                  </div>
+                  <div class="col-md-12">
+                    <span class="contenido-ts">{{
+                      personSelected.detalle.tipoSangre.valor==null ? 'NO DEFINIDO': personSelected.detalle.tipoSangre.valor
+                      }}</span>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="col-md-12">
+                    <span class="titulo">Fallecido &nbsp;</span>
+                  </div>
+                  <div class="col-md-12">
+                    <span class="contenido">{{
+                      personSelected.fallecimiento.fallecido==true ? 'SI' : 'NO'
+                      }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr />
+          <div class="row">
+            <div class="col mb-3">
+              <button mat-raised-button class="btn btn-mx-2" *ngIf="bmostrarNuevo"
+                (click)="accionesHistoriaClinica(1)" matTooltip="De un clic para crear una historia clínica"
+                matTooltipClass="tooltip-class" [matTooltipPosition]="'above'">
+                CREAR HISTORIA CLÍNICA <i class="fas fa-plus"></i>
+              </button>
+              <button mat-raised-button class="btn btn-mx-2" (click)="accionesHistoriaClinica(2)"
+                matTooltip="De un clic para mostrar las consultas del paciente" matTooltipClass="tooltip-class" [matTooltipPosition]="'above'">
+                CONSULTAS MÉDICAS <i class="fas fa-stethoscope"></i>
+              </button>
+              <button mat-raised-button class="btn btn-mx-2" (click)="accionesHistoriaClinica(3)"
+                matTooltip="De un clic para mostrar las citas médicas del paciente" matTooltipClass="tooltip-class" [matTooltipPosition]="'above'">
+                CITAS MÉDICAS <i class="fas fa-book-medical"></i>
+              </button>
+              <button mat-raised-button class="btn btn-mx-2" (click)="accionesHistoriaClinica(7)"
+                matTooltip="De un clic para mostrar el registro de signos vitales del paciente" matTooltipClass="tooltip-class" [matTooltipPosition]="'above'">
+                SIGNOS VITALES <i class="fas fa-heartbeat"></i>
+              </button>
+              <button mat-raised-button class="btn btn-mx-2" (click)="accionesHistoriaClinica(4)"
+                matTooltip="De un clic para mostrar las vacunas del Paciente" matTooltipClass="tooltip-class" [matTooltipPosition]="'above'">
+                VACUNAS <i class="fas fa-syringe"></i>
+              </button>
+              <button mat-raised-button class="btn btn-mx-2" (click)="accionesHistoriaClinica(6)"
+                matTooltip="De un clic para mostrar los registros de salud mental del Paciente" matTooltipClass="tooltip-class" [matTooltipPosition]="'above'">
+                SALUD MENTAL <i class="fas fa-user-md"></i>
+              </button>
+              <button mat-raised-button class="btn btn-mx-2" (click)="accionesHistoriaClinica(10)"
+              matTooltip="De un clic para mostrar los registros de datos cronicos" matTooltipClass="tooltip-class" [matTooltipPosition]="'above'">
+              CRÓNICOS <i class="fa-solid fa-lungs"></i>
+              </button>
+              <button mat-raised-button class="btn btn-mx-2" (click)="accionesHistoriaClinica(8)"
+                matTooltip="De un clic para mostrar las cirugías del Paciente" matTooltipClass="tooltip-class" [matTooltipPosition]="'above'">
+                CIRUGIAS <i class="fas fa-procedures"></i>
+              </button>
+              <button mat-raised-button class="btn btn-mx-2" (click)="accionesHistoriaClinica(9)"
+                matTooltip="De un clic para mostrar las pruebas de laboratorio e imágenes del Paciente" matTooltipClass="tooltip-class" [matTooltipPosition]="'above'">
+                EXÁMENES MÉDICOS<i class="fas fa-microscope"></i>
+              </button>
+            </div>
+          </div>
+          <ng-container *ngIf="mostrarAdmision; else datosClinicos">
+            <div class="form-row" *ngIf="!noHayAdmision">
+              <div class="col-md-12 text-left">
+                <button mat-flat-button color="primary" (click)="MostrarDialogoIngresoPaciente()">
+                  <mat-icon>add</mat-icon> Nueva admisión
+                </button>
+                &nbsp;
+                <button *ngIf="personSelected.detalle.tipoPersona.codigo != 'DSCN'" mat-flat-button color="accent"
+                  type="button" (click)="editarResidencia()">
+                  <mat-icon>replay</mat-icon> Actualizar Residencia
+                </button>
+              </div>
+            </div>
+          </ng-container>
+        </mat-card>
+      </div>
+    </div>
+  </form>
+  <app-buzon-historia-clinica [dataPersona]="personSelected" [events]="eventSubject.asObservable()">
+  </app-buzon-historia-clinica>
+</div>

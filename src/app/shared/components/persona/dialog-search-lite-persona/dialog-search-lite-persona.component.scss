@@ -1,0 +1,15 @@
+@import "src/assets/CSS/variables";
+button.mat-raised-button:hover:enabled {
+    background-color: $amarillo1;
+    color: $fondoBarra;
+}
+
+input.mat-input-element {
+    text-transform: uppercase;
+}
+
+.contentResult {
+    margin: 1rem;
+    height: 100%;
+    width: 100%;
+}

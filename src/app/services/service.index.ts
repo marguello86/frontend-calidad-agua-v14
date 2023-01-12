@@ -1,0 +1,34 @@
+import { from } from 'rxjs';
+
+export { LoginService } from 'src/app/services/seguridad/login.service';
+export { BuscarPersonasService } from 'src/app/services/persona/buscar-personas.service';
+export { HeaderService } from 'src/app/services/header.service';
+export { HttpHeadersService } from 'src/app/services/http-headers.service';
+export { LocalStorageAdminService } from 'src/app/services/local-storage-admin.service';
+export { MenuService } from 'src/app/services/menu/menu.service';
+export { PersonaService } from 'src/app/services/persona/persona.service';
+export { PersonalMinsaService }  from 'src/app/services/personalMedico/personal-medico.service';
+export { SbcCatEntidadesService } from 'src/app/services/catalogos/sbc-cat-entidades.service';
+export { ComunidadService } from 'src/app/services/divisionPolitica/comunidad.service';
+export { CatalogosEmergenciaService } from 'src/app/services/catalogos/catalogos-emergencia.service';
+export { UsuarioRoleAccionService } from 'src/app/services/utility/usuario-role-accion.service';
+/* export { SbcCatColectivosService } from 'src/app/services/catalogos/sbc-cat-colectivos.service';
+export { SnhCatColectivosService } from 'src/app/services/catalogos/snh-cat-colectivos.service';
+export { SnhCatEntidadesService } from 'src/app/services/catalogos/snh-cat-entidades.service';
+export { SnhCatPacientesService } from 'src/app/services/catalogos/snh-cat-pacientes.service';
+*/
+export { SnhCatEntidadesService } from 'src/app/services/catalogos/snh-cat-entidades.service';
+export { SnhCatHospitalarioService } from 'src/app/services/catalogos/snh-cat-hospitalario.service';
+export { SectorService } from 'src/app/services/redServicio/sector.service';
+export { SistemaService } from 'src/app/services/seguridad/sistema.service';
+export { ModuloService } from 'src/app/services/seguridad/modulo.service';
+export { PacienteService } from 'src/app/services/paciente/paciente.service';
+export { Cie10Service } from 'src/app/services/catalogos/cie10.service';
+//export { CustomMatPaginatorIntl } from 'src/app/services/custom-mat-paginator-intl.service';
+export { UnidadSaludService } from 'src/app/services/unidadSalud/unidad-salud.service';
+export { SbcCatEntidadesprotectedService } from './catalogos/sbc-cat-entidadesprotected.service';
+export { ClockService } from 'src/app/services/clock.service';
+export { RolService } from 'src/app/services/seguridad/rol.service';
+export { UsuarioService } from 'src/app/services/seguridad/usuario.service';
+export { DashboardService } from 'src/app/services/dashboard/dashboard.service';
+export { AdmisionService } from 'src/app/services/admision.service';

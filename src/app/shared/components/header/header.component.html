@@ -1,0 +1,98 @@
+<mat-toolbar color="primary" class="container-fluid">
+  <mat-toolbar-row>
+    <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6">
+      <div class="row">
+        <div class="col-12">
+          <div class="d-none d-lg-block d-xl-block">
+            &nbsp; {{nombreAplicacion | titlecase}}
+          </div>
+          <div class="d-lg-none d-sm-block">
+            &nbsp; {{codigoAplicacion | uppercase}}
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <button type="button" (click)="mostrarDialogo()"
+                class="btn btn-sm btn-outline-light texto-boton" >{{unidadService.unidadSeleccionada$.value.nombre}}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 text-right">
+      <!--notificaciones-->
+      <!-- <button mat-button [matMenuTriggerFor]="notificaciones">
+        <mat-icon>notifications</mat-icon>
+        <mat-menu #notificaciones="matMenu">
+          <mat-list>
+            <h3 mat-subheader>Notificaciones</h3>
+            <mat-list-item *ngFor="let notifica of listaNotificaciones">
+              <mat-icon mat-list-icon>folder</mat-icon>
+              <h4 mat-line>{{ notifica.titulo }}</h4>
+              <p mat-line>{{ notifica.fecha | date }}</p>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <h3 mat-subheader>Sistema</h3>
+            <mat-list-item *ngFor="let nota of notas">
+              <mat-icon mat-list-icon>note</mat-icon>
+              <h4 mat-line>{{ nota.titulo }}</h4>
+              <p mat-line>{{ nota.fecha | date }}</p>
+            </mat-list-item>
+          </mat-list>
+        </mat-menu>
+      </button> -->
+
+      <!--notificaciones-->
+
+      <!--correos-->
+
+      <!--correos-->
+
+      <!--perfil de usuario-->
+      <span *ngIf="onLine; else noConectado">
+        <!--Conectado-->
+        <button mat-button [matMenuTriggerFor]="perfilUsuario">
+          <span style="width: 12em;display: inline-block;white-space: normal;line-height: 1;">{{ usuario.nombre }}</span> <mat-icon>keyboard_arrow_down</mat-icon>
+          <img src="assets/images/Icon awesome-user-circle.png" class="rounded-circle"
+            style="width:45px; height:45px; border: 4px solid #fff" alt="Nombre de usuario" width="40" height="40" />
+        </button>
+        <mat-menu #perfilUsuario="matMenu">
+          <button mat-menu-item>
+            <mat-icon>folder_shared</mat-icon> {{usuario.username}}
+          </button>
+
+          <mat-divider></mat-divider>
+
+          <!-- <button mat-menu-item>
+            <mat-icon>compare_arrows</mat-icon>Cambiar contraseña
+          </button> -->
+
+          <mat-divider></mat-divider>
+          <button mat-menu-item (click)="cerrarSesion()">
+            <mat-icon>exit_to_app</mat-icon>Cerrar sesión
+          </button>
+
+        </mat-menu>
+        <!--Conectado-->
+      </span>
+      <ng-template #noConectado>
+        <!--No conectado-->
+        <button mat-button [matMenuTriggerFor]="perfilUsuario">
+          <mat-icon>person</mat-icon>
+          <mat-icon>keyboard_arrow_down</mat-icon>
+        </button>
+        <mat-menu #perfilUsuario="matMenu">
+          <button mat-menu-item (click)="iniciarSesion()">
+            <mat-icon>power_settings_new</mat-icon>Iniciar sesión
+          </button>
+          <mat-divider></mat-divider>
+          <button mat-menu-item (click)="recuperaPass()">
+            <mat-icon>settings_input_component</mat-icon>Recuperar credenciales
+          </button>
+        </mat-menu>
+        <!--No conectado-->
+      </ng-template>
+
+      <!--perfil de usuario-->
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>

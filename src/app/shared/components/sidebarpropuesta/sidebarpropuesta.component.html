@@ -1,0 +1,7 @@
+<mat-sidenav-container>
+    <mat-sidenav #appDrawer mode="over" opened="true">
+        <mat-nav-list>
+            <app-menulistitem *ngFor="let item of menu" [item]="item"></app-menulistitem>
+        </mat-nav-list>
+    </mat-sidenav>
+</mat-sidenav-container>
